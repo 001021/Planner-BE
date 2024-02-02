@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org">
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:x-transition="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,12 +9,12 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../assets/css/tailwind.output.css" />
+    <link rel="stylesheet" href="/public/assets/css/tailwind.output.css" />
     <script
       src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
       defer
     ></script>
-    <script src="../assets/js/init-alpine.js"></script>
+    <script src="/public/assets/js/init-alpine.js"></script>
   </head>
   <body>
     <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -25,13 +26,13 @@
             <img
               aria-hidden="true"
               class="object-cover w-full h-full dark:hidden"
-              src="../assets/img/create-account-office.jpeg"
+              src="/public/assets/img/create-account-office.jpeg"
               alt="Office"
             />
             <img
               aria-hidden="true"
               class="hidden object-cover w-full h-full dark:block"
-              src="../assets/img/create-account-office-dark.jpeg"
+              src="/public/assets/img/create-account-office-dark.jpeg"
               alt="Office"
             />
           </div>
@@ -42,11 +43,21 @@
               >
                 집안일 플래너 회원가입
               </h1>
-              <form th:action="@{/api/users/join}" method="post">
+              <form th:action="@{/users/join}" method="post">
+                <label class="block mt-4 text-sm">
+                  <span class="text-gray-700 dark:text-gray-400">이름</span>
+                  <input
+                          class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            type="text"
+                            name="name"
+                  />
+                </label>
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">이메일 주소</span>
                 <input
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    type="email"
+                    name="email"
                 />
               </label>
               <label class="block mt-4 text-sm">
@@ -54,6 +65,7 @@
                 <input
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   type="password"
+                  name="password"
                 />
               </label>
               <label class="block mt-4 text-sm">
@@ -63,6 +75,7 @@
                 <input
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   type="password"
+                  name="passwordConfirm"
                 />
               </label>
 
@@ -203,7 +216,7 @@
               <p class="mt-4">
                 <a
                   class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  href="login.html"
+                  th:href="@{/users/login}"
                 >
                   계정이 있으신가요? 로그인
                 </a>
@@ -215,14 +228,16 @@
     </div>
   <script>
     window.onload = function() {
-      const success = /[[${success}]]/ false;
+      // Thymeleaf의 변수를 JavaScript로 올바르게 전달
+      const success = [[${success}]] || false; // 기본값으로 false 설정
       if (success) {
-        document.getElemetById('modal').classList.add('isModalOpen');
+        document.getElementById('modal').classList.add('isModalOpen');
         setTimeout(function() {
-          window.location.href = '/login';
+          window.location.href = '/login'; // 리다이렉션 경로 확인 필요
         }, 3000);
       }
     }
+
   </script>
   </body>
 </html>
