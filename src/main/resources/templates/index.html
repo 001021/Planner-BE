@@ -204,7 +204,7 @@
             <li class="relative px-6 py-3">
               <a
                       class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                      th:href="@{/cleaning-task/create}"
+                      th:href="@{/cleaning-task/todolist}"
               >
                 <svg
                         class="w-5 h-5"
@@ -554,7 +554,7 @@
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="../static/public/pages/login.html">Login</a>
+                    <a class="w-full" th:href="@{/users/login}">Login</a>
                   </li>
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -566,19 +566,19 @@
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="../static/public/pages/forgot-password.html">
+                    <a class="w-full" th:href="@{/forgot-password}">
                       Forgot password
                     </a>
                   </li>
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="../static/public/pages/404.html">404</a>
+                    <a class="w-full" th:href="@{/404}">404</a>
                   </li>
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="../static/public/pages/blank.html">Blank</a>
+                    <a class="w-full" th:href="@{/blank}">Blank</a>
                   </li>
                 </ul>
               </template>

@@ -61,4 +61,9 @@ public class WebController {
         return "forgot-password";
     }
 
+    @GetMapping("/cleaning-task/todolist")
+    public String showCleaningTodoList() {
+        return "/cleaning-task/todolist";
+    }
+
 }
