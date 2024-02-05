@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
@@ -13,7 +14,6 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class CleaningTodoItem {
 
     @Id
@@ -21,9 +21,12 @@ public class CleaningTodoItem {
     @Column(name = "cleaningTodoItemId", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "taskName")
+    @Column(name = "taskName", nullable = false)
     private String taskName;
 
-    @Column(name = "isCompleted")
+    @Column(name = "isCompleted", nullable = false)
     private boolean completed = false;
+
+    @Column(name = "createdTime", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createdTime;
 }
