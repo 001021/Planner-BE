@@ -34,4 +34,8 @@ public class CleaningTodoItemService {
     public void update(CleaningTodoItem cleaningTodoItem) {
         cleaningTodoItemRepository.save(cleaningTodoItem);
     }
+
+    public Object findAllByOrderByCreatedTimeDesc() {
+        return cleaningTodoItemRepository.findAllByOrderByCreatedTimeDesc();
+    }
 }

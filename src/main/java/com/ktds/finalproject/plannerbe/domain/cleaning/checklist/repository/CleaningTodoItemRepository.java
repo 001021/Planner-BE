@@ -4,8 +4,11 @@ import com.ktds.finalproject.plannerbe.domain.cleaning.checklist.dto.CleaningTod
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface CleaningTodoItemRepository extends JpaRepository<CleaningTodoItem, UUID> {
+
+    List<CleaningTodoItem> findAllByOrderByCreatedTimeDesc();
 }
