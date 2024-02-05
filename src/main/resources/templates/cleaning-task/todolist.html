@@ -928,8 +928,8 @@
                                     <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Edit"
-                                            th:attr="data-todo-id=${todo.id}"
-                                            onclick="editTodoName(this.getAttribute('data-todo-id'))"
+                                            th:attr="data-todo-id=${todo.id}" data-action="edit"
+                                            onclick="toggleEdit(this.getAttribute('data-todo-id'))"
                                     >
                                         <svg
                                                 class="w-5 h-5"
@@ -1040,5 +1040,69 @@
             console.error('There has been a problem with your fetch operation:', error);
         });
     }
+
+    function toggleEdit(todoId) {
+        const editInput = document.getElementById('edit-' + todoId);
+        const taskNameSpan = document.getElementById('name-' + todoId);
+        const editBtn = document.querySelector(`[data-todo-id='${todoId}'][data-action='edit']`);
+        const isEditing = editInput.classList.contains('hidden');
+
+        if (isEditing) {
+            // Edit 모드로 전환
+            taskNameSpan.classList.add('hidden');
+            editInput.classList.remove('hidden');
+            editInput.value = taskNameSpan.textContent;
+            editInput.focus();
+            editBtn.textContent = 'Save';
+            editBtn.setAttribute('data-action', 'save');
+        } else {
+            // Save 모드로 전환
+            const updatedTaskName = editInput.value;
+            saveTodoName(todoId, updatedTaskName).then(() => {
+                taskNameSpan.textContent = updatedTaskName;
+                taskNameSpan.classList.remove('hidden');
+                editInput.classList.add('hidden');
+                editBtn.textContent = 'Edit';
+                editBtn.setAttribute('data-action', 'edit');
+            }).catch(error => {
+                console.error('Error saving todo:', error);
+                alert('Failed to save todo. Please try again.');
+            });
+        }
+    }
+
+    function saveTodoName(todoId, taskName) {
+        return fetch('/cleaning-todos/update/' + todoId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                taskName: taskName
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                // 응답에 본문이 있는지 확인하고, 있다면 JSON으로 파싱
+                if (response.headers.get("content-length") !== "0") {
+                    return response.json();
+                } else {
+                    // 본문이 없는 경우(성공적인 업데이트), 빈 객체나 적절한 다른 값을 반환
+                    return {};
+                }
+            })
+            .then(data => {
+                console.log('Todo item updated:', data);
+                // 업데이트 성공 후의 로직 처리
+            })
+            .catch(error => {
+                console.error('Error updating todo item:', error);
+                alert('Failed to update todo status. Please try again.');
+            });
+    }
+
+
 
 </script>
