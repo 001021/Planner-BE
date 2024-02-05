@@ -2,12 +2,14 @@ package com.ktds.finalproject.plannerbe.domain.cleaning.checklist.controller;
 
 import com.ktds.finalproject.plannerbe.domain.cleaning.checklist.dto.CleaningTodoItem;
 import com.ktds.finalproject.plannerbe.domain.cleaning.checklist.service.CleaningTodoItemService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -19,7 +21,7 @@ public class CleaningTodoItemController {
 
     @GetMapping
     public String listTodos(Model model) {
-        model.addAttribute("todolist", cleaningTodoItemService.findAll());
+        model.addAttribute("todolist", cleaningTodoItemService.findAllByOrderByCreatedTimeDesc());
         return "cleaning-task/todolist";
     }
 
@@ -42,16 +44,40 @@ public class CleaningTodoItemController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable UUID id, @ModelAttribute("todo") CleaningTodoItem updatedTodo) {
-        CleaningTodoItem existingTodo = cleaningTodoItemService.findById(id);
-
-        existingTodo.setTaskName(updatedTodo.getTaskName());
-        existingTodo.setCompleted(updatedTodo.isCompleted());
-
-        cleaningTodoItemService.save(existingTodo);
-
-        return "redirect:/cleaning-todos";
+    @ResponseBody
+    public ResponseEntity<?> updateTodo(@PathVariable UUID id, @RequestBody Map<String, Object> updates) {
+        try {
+            CleaningTodoItem todoItem = cleaningTodoItemService.findById(id);
+            if (todoItem != null) {
+                String taskName = (String) updates.get("taskName");
+                todoItem.setTaskName(taskName);
+                cleaningTodoItemService.save(todoItem);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating todo item");
+        }
     }
+
+    @PostMapping("/update/status/{id}")
+    @ResponseBody
+    public ResponseEntity<?> updateTodoStatus(@PathVariable UUID id) {
+        try {
+            CleaningTodoItem todoItem = cleaningTodoItemService.findById(id);
+            if (todoItem != null) {
+                todoItem.setCompleted(!todoItem.isCompleted());
+                cleaningTodoItemService.save(todoItem);
+                return ResponseEntity.ok(todoItem.isCompleted());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating todo item");
+        }
+    }
+
 
 
 
