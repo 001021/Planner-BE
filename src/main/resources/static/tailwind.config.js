@@ -197,6 +197,21 @@ module.exports = {
     borderColor: ['focus', 'hover', 'dark', 'dark:focus', 'dark:hover'],
     divideColor: ['dark'],
     boxShadow: ['focus', 'dark:focus'],
+    extend: {
+      boxShadow: {
+        'outline': '0 0 0 3px rgba(126,58,242,.5)', // 기본 focus 및 focus-visible box-shadow
+      },
+      borderColor: {
+        'focus': '#7e3af2', // 기본 focus 및 focus-visible border-color
+      },
+    },
+    variants: {
+      extend: {
+        boxShadow: ['focus', 'focus-visible'],
+        borderColor: ['focus', 'focus-visible'],
+        outline: ['focus-visible'],
+      },
+    },
   },
   plugins: [
     require('tailwindcss-multi-theme'),
