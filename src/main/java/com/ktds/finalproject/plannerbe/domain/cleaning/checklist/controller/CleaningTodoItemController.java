@@ -52,7 +52,7 @@ public class CleaningTodoItemController {
                 String taskName = (String) updates.get("taskName");
                 todoItem.setTaskName(taskName);
                 cleaningTodoItemService.save(todoItem);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(todoItem);
             } else {
                 return ResponseEntity.notFound().build();
             }
