@@ -4,17 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Ingredient {
 
     @Id
@@ -35,10 +35,10 @@ public class Ingredient {
     private String category; // 추후 Enum으로 변경
 
     @Column(name = "expirationDate")
-    private Timestamp expirationDate;
+    private Date expirationDate;
 
     @Column(name = "purchaseDate")
-    private Timestamp purchaseDate;
+    private Date purchaseDate;
 
     @Column(name = "storageLocation")
     private String storageLocation;
