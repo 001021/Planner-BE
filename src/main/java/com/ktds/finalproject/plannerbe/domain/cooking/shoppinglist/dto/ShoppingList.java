@@ -25,7 +25,10 @@ public class ShoppingList {
     private String itemName;
 
     @Column(name = "quantity")
-    private int quantity;
+    private int quantity = 1;
+
+    @Column(name = "unit")
+    private String unit = "개";
 
     @Column(name = "isPurchased", nullable = false)
     private boolean isPurchased = false;

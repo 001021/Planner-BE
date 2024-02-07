@@ -45,10 +45,10 @@ public class ShoppingListController {
             if (shoppingList != null) {
                 String itemName = (String) updates.get("itemName");
                 int quantity = (int) updates.get("quantity");
-                System.out.println("itemName: " + itemName);
-                System.out.println("quantity: " + quantity);
+                String unit = (String) updates.get("unit");
                 shoppingList.setItemName(itemName);
                 shoppingList.setQuantity(quantity);
+                shoppingList.setUnit(unit);
                 shoppingListService.save(shoppingList);
                 return ResponseEntity.ok(shoppingList);
             } else {
