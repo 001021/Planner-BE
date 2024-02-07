@@ -951,6 +951,44 @@
                                         placeholder="2"
                                         name="quantity"
                                 />
+                                <select
+                                        class="block w-full pr-20 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select"
+                                        name="unit"
+                                >
+                                    <option value="">단위 선택</option>
+
+                                    <optgroup label="무게">
+                                        <option value="g">그램(g)</option>
+                                        <option value="kg">킬로그램(kg)</option>
+                                        <option value="mg">밀리그램(mg)</option>
+                                        <option value="oz">온스(oz)</option>
+                                        <option value="lb">파운드(lb)</option>
+                                    </optgroup>
+
+                                    <optgroup label="부피">
+                                        <option value="L">리터(L)</option>
+                                        <option value="mL">밀리리터(mL)</option>
+                                        <option value="cup">컵(cup)</option>
+                                        <option value="tbsp">테이블스푼(tbsp)</option>
+                                        <option value="tsp">티스푼(tsp)</option>
+                                    </optgroup>
+
+                                    <optgroup label="수량">
+                                        <option value="개">개</option>
+                                        <option value="box">박스(box)</option>
+                                        <option value="pack">팩(pack)</option>
+                                        <option value="bundle">묶음(bundle)</option>
+                                        <option value="piece">조각(piece)</option>
+                                    </optgroup>
+
+                                    <optgroup label="기타">
+                                        <option value="slice">슬라이스(slice)</option>
+                                        <option value="pinch">꼬집(pinch)</option>
+                                        <option value="handful">한 줌(handful)</option>
+                                        <option value="can">캔(can)</option>
+                                        <option value="bottle">병(bottle)</option>
+                                    </optgroup>
+                                </select>
                                 <button
                                         class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                                         type="submit"
@@ -974,13 +1012,53 @@
                                       th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"></span>
                                 <input type="text"  th:id="${'edit-name-' + shoppingItem.id}" class="hidden focus:border-focus focus:shadow-focus focus:outline-none focus-visible:border-focus focus-visible:shadow-focus"
                                        th:value="${shoppingItem.itemName}"/>
-                                <span th:text="${shoppingItem.quantity} + 개" th:id="${'quantity-' + shoppingItem.id}"
+                                <span th:text="${shoppingItem.quantity}" th:id="${'quantity-' + shoppingItem.id}"
                                       th:classappend="${shoppingItem.isPurchased} ? 'text-gray-400' : 'text-gray-900'"
                                       th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"></span>
                                 <input type="text"  th:id="${'edit-quantity-' + shoppingItem.id}" class="hidden focus:border-focus focus:shadow-focus focus:outline-none focus-visible:border-focus focus-visible:shadow-focus"
-                                       th:value="${shoppingItem.quantity} + 개"/>
+                                       th:value="${shoppingItem.quantity}"/>
+                                <span th:text="${shoppingItem.unit}" th:id="${'unit-' + shoppingItem.id}"
+                                        th:classappend="${shoppingItem.isPurchased} ? 'text-gray-400' : 'text-gray-900'"
+                                        th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"></span>
+                                <select
+                                        th:id="${'edit-unit-' + shoppingItem.id}"
+                                        class="hidden block w-full pr-20 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select"
+                                        name="unit"
+                                >
+                                    <option th:value="${shoppingItem.unit}">단위 선택</option>
 
+                                    <optgroup label="무게">
+                                        <option value="g">그램(g)</option>
+                                        <option value="kg">킬로그램(kg)</option>
+                                        <option value="mg">밀리그램(mg)</option>
+                                        <option value="oz">온스(oz)</option>
+                                        <option value="lb">파운드(lb)</option>
+                                    </optgroup>
 
+                                    <optgroup label="부피">
+                                        <option value="L">리터(L)</option>
+                                        <option value="mL">밀리리터(mL)</option>
+                                        <option value="cup">컵(cup)</option>
+                                        <option value="tbsp">테이블스푼(tbsp)</option>
+                                        <option value="tsp">티스푼(tsp)</option>
+                                    </optgroup>
+
+                                    <optgroup label="수량">
+                                        <option value="개">개</option>
+                                        <option value="box">박스(box)</option>
+                                        <option value="pack">팩(pack)</option>
+                                        <option value="bundle">묶음(bundle)</option>
+                                        <option value="piece">조각(piece)</option>
+                                    </optgroup>
+
+                                    <optgroup label="기타">
+                                        <option value="slice">슬라이스(slice)</option>
+                                        <option value="pinch">꼬집(pinch)</option>
+                                        <option value="handful">한 줌(handful)</option>
+                                        <option value="can">캔(can)</option>
+                                        <option value="bottle">병(bottle)</option>
+                                    </optgroup>
+                                </select>
                             </div>
                             <div class="flex items-center space-x-4">
                                 <!--                                    <input type="hidden" name="_method" value="Save"/>-->
@@ -1063,17 +1141,22 @@
             const shoppingItemId = checkbox.getAttribute('data-shoppingItem-id');
             const itemNameElement = document.getElementById('name-' + shoppingItemId);
             const quantityElement = document.getElementById('quantity-' + shoppingItemId);
+            const unitElement = document.getElementById('unit-' + shoppingItemId);
 
             if (checkbox.checked) {
                 itemNameElement.classList.add('line-through', 'text-gray-400');
                 itemNameElement.classList.remove('text-gray-900');
                 quantityElement.classList.add('line-through', 'text-gray-400');
                 quantityElement.classList.remove('text-gray-900');
+                unitElement.classList.add('line-through', 'text-gray-400');
+                unitElement.classList.remove('text-gray-900');
             } else {
                 itemNameElement.classList.remove('line-through', 'text-gray-400');
                 itemNameElement.classList.add('text-gray-900');
                 quantityElement.classList.remove('line-through', 'text-gray-400');
                 quantityElement.classList.add('text-gray-900');
+                unitElement.classList.remove('line-through', 'text-gray-400');
+                unitElement.classList.add('text-gray-900');
             }
         });
     });
@@ -1085,6 +1168,7 @@
         const isPurchased = checkbox.checked;
         const itemNameElement = document.getElementById('name-' + shoppingItemId);
         const quantityElement = document.getElementById('quantity-' + shoppingItemId);
+        const unitElement = document.getElementById('unit-' + shoppingItemId);
 
         fetch('/cooking/shopping-list/update/status/' + shoppingItemId, {
             method: 'POST',
@@ -1111,6 +1195,10 @@
                 quantityElement.style.textDecoration = 'line-through';
                 quantityElement.classList.add('text-gray-400');
                 quantityElement.classList.remove('text-gray-900');
+
+                unitElement.style.textDecoration = 'line-through';
+                unitElement.classList.add('text-gray-400');
+                unitElement.classList.remove('text-gray-900');
             } else {
                 itemNameElement.style.textDecoration = 'none';
                 itemNameElement.classList.remove('text-gray-400');
@@ -1119,6 +1207,10 @@
                 quantityElement.style.textDecoration = 'none';
                 quantityElement.classList.remove('text-gray-400');
                 quantityElement.classList.add('text-gray-900');
+
+                unitElement.style.textDecoration = 'none';
+                unitElement.classList.remove('text-gray-400');
+                unitElement.classList.add('text-gray-900');
             }
         }).catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -1129,8 +1221,10 @@
     function toggleEdit(shoppingItemId) {
         const editNameInput = document.getElementById('edit-name-' + shoppingItemId);
         const editQuantityInput = document.getElementById('edit-quantity-' + shoppingItemId);
+        const editUnitSelect = document.getElementById('edit-unit-' + shoppingItemId); // 단위 수정을 위한 select 요소
         const itemNameSpan = document.getElementById('name-' + shoppingItemId);
         const quantitySpan = document.getElementById('quantity-' + shoppingItemId);
+        const unitSpan = document.getElementById('unit-' + shoppingItemId); // 현재 단위를 보여주는 span 요소
         const editBtn = document.querySelector(`button[data-shoppingItem-id='${shoppingItemId}']`);
         const isEditing = editBtn.getAttribute('data-action') === 'edit';
 
@@ -1139,12 +1233,14 @@
             itemNameSpan.classList.add('hidden');
             editNameInput.classList.remove('hidden');
             editNameInput.value = itemNameSpan.textContent;
-            editNameInput.focus();
 
             quantitySpan.classList.add('hidden');
             editQuantityInput.classList.remove('hidden');
             editQuantityInput.value = quantitySpan.textContent;
-            editQuantityInput.focus();
+
+            unitSpan.classList.add('hidden');
+            editUnitSelect.classList.remove('hidden');
+            editUnitSelect.value = unitSpan.textContent; // 현재 단위 값을 select 요소의 값으로 설정
 
             editBtn.querySelector('.edit-icon').classList.add('hidden');
             editBtn.querySelector('.save-icon').classList.remove('hidden');
@@ -1153,8 +1249,9 @@
             // Save 모드로 전환
             const updatedItemName = editNameInput.value;
             const updatedQuantity = editQuantityInput.value;
+            const updatedUnit = editUnitSelect.value; // 수정된 단위 값을 가져옵니다.
 
-            saveUpdates(shoppingItemId, updatedItemName, updatedQuantity).then(() => {
+            saveUpdates(shoppingItemId, updatedItemName, updatedQuantity, updatedUnit).then(() => {
                 itemNameSpan.textContent = updatedItemName;
                 itemNameSpan.classList.remove('hidden');
                 editNameInput.classList.add('hidden');
@@ -1163,23 +1260,28 @@
                 quantitySpan.classList.remove('hidden');
                 editQuantityInput.classList.add('hidden');
 
+                unitSpan.textContent = updatedUnit; // 단위 span 요소를 업데이트합니다.
+                unitSpan.classList.remove('hidden');
+                editUnitSelect.classList.add('hidden');
+
                 editBtn.querySelector('.edit-icon').classList.remove('hidden');
                 editBtn.querySelector('.save-icon').classList.add('hidden');
                 editBtn.setAttribute('data-action', 'edit');
             }).catch(error => {
-                console.error('Error saving todo:', error);
-                alert('Failed to save todo. Please try again.');
+                console.error('Error updating item:', error);
+                alert('Failed to update item. Please try again.');
             });
         }
     }
 
 
 
-    function saveUpdates(shoppingItemId, itemName, quantityText) {
+
+    function saveUpdates(shoppingItemId, itemName, quantityText, unit) {
 
         const quantity = parseInt(quantityText.replace(/[^0-9]/g, ''), 10);
 
-        console.log(shoppingItemId, itemName, quantity);
+        console.log(shoppingItemId, itemName, quantity, unit);
         return fetch(`/cooking/shopping-list/update/${shoppingItemId}`, {
             method: 'POST',
             headers: {
@@ -1187,7 +1289,8 @@
             },
             body: JSON.stringify({
                 itemName: itemName,
-                quantity: quantity // 수정된 숫자 값을 사용
+                quantity: quantity,
+                unit: unit
             })
         })
             .then(response => {
