@@ -971,14 +971,12 @@
                                        onchange="updateShoppingItemStatus(this, this.getAttribute('data-shoppingItem-id'))"/>
                                 <span th:text="${shoppingItem.itemName}" th:id="${'name-' + shoppingItem.id}"
                                       th:classappend="${shoppingItem.isPurchased} ? 'text-gray-400' : 'text-gray-900'"
-                                      th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"
-                                      class="shopping-item-name"></span>
+                                      th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"></span>
                                 <input type="text"  th:id="${'edit-name-' + shoppingItem.id}" class="hidden focus:border-focus focus:shadow-focus focus:outline-none focus-visible:border-focus focus-visible:shadow-focus"
                                        th:value="${shoppingItem.itemName}"/>
                                 <span th:text="${shoppingItem.quantity} + 개" th:id="${'quantity-' + shoppingItem.id}"
                                       th:classappend="${shoppingItem.isPurchased} ? 'text-gray-400' : 'text-gray-900'"
-                                      th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"
-                                      class="shopping-item-name"></span>
+                                      th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"></span>
                                 <input type="text"  th:id="${'edit-quantity-' + shoppingItem.id}" class="hidden focus:border-focus focus:shadow-focus focus:outline-none focus-visible:border-focus focus-visible:shadow-focus"
                                        th:value="${shoppingItem.quantity} + 개"/>
 
@@ -1061,29 +1059,25 @@
     console.log(todoId);
 
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.shopping-item-name').forEach(shoppingItemNameElement => {
-            const shoppingItemId = shoppingItemNameElement.getAttribute('id').replace('name-', '');
-            const checkbox = document.querySelector(`input[data-shoppingItem-id="${shoppingItemId}"]`);
-
-            if (checkbox && checkbox.checked) {
-                shoppingItemNameElement.classList.add('line-through', 'text-gray-400');
-                shoppingItemNameElement.classList.remove('text-gray-900');
-            } else {
-                shoppingItemNameElement.classList.remove('line-through', 'text-gray-400');
-                shoppingItemNameElement.classList.add('text-gray-900');
-            }
-
-            // quantityElement에 대한 상태 초기화 로직 추가
+        document.querySelectorAll(`input[type="checkbox"][data-shoppingItem-id]`).forEach(checkbox => {
+            const shoppingItemId = checkbox.getAttribute('data-shoppingItem-id');
+            const itemNameElement = document.getElementById('name-' + shoppingItemId);
             const quantityElement = document.getElementById('quantity-' + shoppingItemId);
-            if (checkbox && checkbox.checked) {
+
+            if (checkbox.checked) {
+                itemNameElement.classList.add('line-through', 'text-gray-400');
+                itemNameElement.classList.remove('text-gray-900');
                 quantityElement.classList.add('line-through', 'text-gray-400');
                 quantityElement.classList.remove('text-gray-900');
             } else {
+                itemNameElement.classList.remove('line-through', 'text-gray-400');
+                itemNameElement.classList.add('text-gray-900');
                 quantityElement.classList.remove('line-through', 'text-gray-400');
                 quantityElement.classList.add('text-gray-900');
             }
         });
     });
+
 
 
     function updateShoppingItemStatus(checkbox, shoppingItemId) {
@@ -1181,15 +1175,19 @@
 
 
 
-    function saveUpdates(shoppingItemId, itemName, quantity) {
-        return fetch('/cooking/shopping-list/update/' + shoppingItemId, {
+    function saveUpdates(shoppingItemId, itemName, quantityText) {
+
+        const quantity = parseInt(quantityText.replace(/[^0-9]/g, ''), 10);
+
+        console.log(shoppingItemId, itemName, quantity);
+        return fetch(`/cooking/shopping-list/update/${shoppingItemId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 itemName: itemName,
-                quantity: quantity
+                quantity: quantity // 수정된 숫자 값을 사용
             })
         })
             .then(response => {
@@ -1200,12 +1198,12 @@
                 return response.json();
             })
             .then(data => {
-                console.log('Todo item updated:', data);
+                console.log('Shopping item updated:', data);
                 return data;
             })
             .catch(error => {
-                console.error('Error updating todo item:', error);
-                alert('Failed to update todo status. Please try again.');
+                console.error('Error updating shopping item:', error);
+                alert('Failed to update shopping item status. Please try again.');
             });
     }
 

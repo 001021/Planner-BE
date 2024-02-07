@@ -45,6 +45,8 @@ public class ShoppingListController {
             if (shoppingList != null) {
                 String itemName = (String) updates.get("itemName");
                 int quantity = (int) updates.get("quantity");
+                System.out.println("itemName: " + itemName);
+                System.out.println("quantity: " + quantity);
                 shoppingList.setItemName(itemName);
                 shoppingList.setQuantity(quantity);
                 shoppingListService.save(shoppingList);
