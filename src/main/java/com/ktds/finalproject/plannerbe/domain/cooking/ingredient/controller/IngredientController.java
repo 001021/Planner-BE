@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -32,8 +33,16 @@ public class IngredientController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteIngredient(@ModelAttribute("newIngredient") Ingredient newIngredient) {
-        ingredientService.save(newIngredient);
+    public String deleteIngredient(@PathVariable UUID id) {
+        ingredientService.deleteById(id);
+        return "redirect:/cooking/ingredient";
+    }
+
+    @PostMapping("/update/{id}")
+    @ResponseBody
+    public String updateIngredient(@PathVariable UUID id, @RequestBody Ingredient ingredient) {
+        log.info("ingredient: {}", ingredient);
+        ingredientService.save(ingredient);
         return "redirect:/cooking/ingredient";
     }
 

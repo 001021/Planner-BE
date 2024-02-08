@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,4 +25,9 @@ public class IngredientService {
     public List<Ingredient> findAllByOrderByIngredientNameDesc() {
         return ingredientRepository.findAllByOrderByIngredientNameDesc();
     }
+
+    public void deleteById(UUID id) {
+        ingredientRepository.deleteById(id);
+    }
+
 }

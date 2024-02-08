@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.UUID;
@@ -35,9 +36,11 @@ public class Ingredient {
     private String category; // 추후 Enum으로 변경
 
     @Column(name = "expirationDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expirationDate;
 
     @Column(name = "purchaseDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date purchaseDate;
 
     @Column(name = "storageLocation")

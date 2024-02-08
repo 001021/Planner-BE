@@ -1177,9 +1177,6 @@
 
 <script th:inline="javascript">
 
-    var todoId = /*[[${todoId}]]*/ 0;
-    console.log(todoId);
-
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll(`input[type="checkbox"][data-shoppingItem-id]`).forEach(checkbox => {
             const shoppingItemId = checkbox.getAttribute('data-shoppingItem-id');
