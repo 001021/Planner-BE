@@ -1218,32 +1218,36 @@
     }
 
     function saveChanges(ingredientId, row) {
-        const formData = new FormData();
+        const data = {};
 
+        // 입력 필드에서 데이터 수집
         row.querySelectorAll('.edit-field').forEach(input => {
-            formData.append(input.name, input.value);
+            data[input.name] = input.value;
         });
 
+        // JSON 형식으로 서버에 데이터 전송
         fetch(`/cooking/ingredient/update/${ingredientId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: formData
+            body: JSON.stringify(data)
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
             .then(data => {
                 console.log('Success:', data);
-                // 성공 로직 처리, 예: row를 편집 불가 상태로 전환
+                // 성공 처리 로직
                 row.classList.remove('editing');
-                // input 필드를 다시 텍스트로 변환
-                row.querySelectorAll('.edit-field').forEach((input, index) => {
-                    const cell = input.parentElement;
-                    cell.innerText = input.value;
-                });
+                updateRowFromData(row, data); // 이 함수는 서버로부터 받은 응답으로 행을 업데이트하는 가상의 함수입니다.
             })
             .catch(error => console.error('Error:', error));
     }
+
 
 
 </script>
