@@ -1001,13 +1001,13 @@
                                     <form th:action="@{/cooking/ingredient/save}" method="post">
                                         <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="ingredientName" placeholder="재료명" required /></td>
                                         <td class="px-4 py-3">
-                                            <input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="number" name="quantity" placeholder="수량" step="0.01" required />
-                                            <input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="unit" placeholder="단위" required />
+                                            <input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="number" name="quantity" placeholder="수량" step="0.01" />
+                                            <input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="unit" placeholder="단위"  />
                                         </td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="category" placeholder="카테고리" required /></td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="date" name="expirationDate" placeholder="유통기한" required /></td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="date" name="purchaseDate" placeholder="구입 날짜" required /></td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="status" placeholder="상태" required /></td>
+                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="category" placeholder="카테고리"  /></td>
+                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="date" name="expirationDate" placeholder="유통기한"  /></td>
+                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="date" name="purchaseDate" placeholder="구입 날짜"  /></td>
+                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="status" placeholder="상태"  /></td>
                                         <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="memo" placeholder="메모" /></td>
                                         <td class="px-4 py-3">
                                             <button type="submit" class="inline-flex inset-y-0 right-0 px-4 justify-center text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
@@ -1016,7 +1016,7 @@
                                         </td>
                                     </form>
                                 </tr>
-                                <tr th:each="ingredient : ${ingredientList}" class="text-gray-700 dark:text-gray-400">
+                                <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${ingredientList}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.quantity} + ' ' + ${ingredient.unit}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
@@ -1026,9 +1026,14 @@
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.memo}"></td>
                                     <td class="px-4 py-3 text-sm">
                                         <div class="flex items-center space-x-4 text-sm">
-                                            <a th:href="@{/cooking/ingredient/edit/${ingredient.id}}" class="text-purple-600 hover:text-purple-900" title="편집">
+                                            <button
+                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                    aria-label="Edit"
+                                                    th:attr="data-ingredient-id=${ingredient.id}" data-action="edit"
+                                                    onclick="toggleEdit(this.getAttribute('data-ingredient-id'))"
+                                            >
                                                 <svg
-                                                        class="w-5 h-5"
+                                                        class="edit-icon w-5 h-5"
                                                         aria-hidden="true"
                                                         fill="currentColor"
                                                         viewBox="0 0 20 20"
@@ -1037,21 +1042,41 @@
                                                             d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
                                                     ></path>
                                                 </svg>
-                                            </a>
-                                            <a th:href="@{/cooking/ingredient/delete/${ingredient.id}}" class="text-red-600 hover:text-red-900" title="삭제">
-                                                <svg
-                                                        class="w-5 h-5"
-                                                        aria-hidden="true"
-                                                        fill="currentColor"
-                                                        viewBox="0 0 20 20"
+
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 20 20"
+                                                     fill="currentColor"
+                                                     class="save-icon w-5 h-5 hidden"
+                                                     aria-hidden="true"
                                                 >
                                                     <path
                                                             fill-rule="evenodd"
-                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                            clip-rule="evenodd"
-                                                    ></path>
+                                                            d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
                                                 </svg>
-                                            </a>
+
+
+                                            </button>
+                                            <form th:action="@{'/cooking/ingredient/delete/' + ${ingredient.id}}" method="post"
+                                                  class="inline">
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <button
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Delete"
+                                                >
+                                                    <svg
+                                                            class="w-5 h-5"
+                                                            aria-hidden="true"
+                                                            fill="currentColor"
+                                                            viewBox="0 0 20 20"
+                                                    >
+                                                        <path
+                                                                fill-rule="evenodd"
+                                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                                clip-rule="evenodd"
+                                                        ></path>
+                                                    </svg>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -1170,183 +1195,55 @@
 
 <script th:inline="javascript">
 
-    var todoId = /*[[${todoId}]]*/ 0;
-    console.log(todoId);
+    function toggleEdit(ingredientId) {
+        const row = document.getElementById(`ingredient-${ingredientId}`);
+        const isEditing = row.classList.contains('editing');
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll(`input[type="checkbox"][data-shoppingItem-id]`).forEach(checkbox => {
-            const shoppingItemId = checkbox.getAttribute('data-shoppingItem-id');
-            const itemNameElement = document.getElementById('name-' + shoppingItemId);
-            const quantityElement = document.getElementById('quantity-' + shoppingItemId);
-            const unitElement = document.getElementById('unit-' + shoppingItemId);
+        const cells = row.querySelectorAll('td:not(:last-child)'); // 마지막 '수정/삭제' 셀을 제외한 모든 셀 선택
 
-            if (checkbox.checked) {
-                itemNameElement.classList.add('line-through', 'text-gray-400');
-                itemNameElement.classList.remove('text-gray-900');
-                quantityElement.classList.add('line-through', 'text-gray-400');
-                quantityElement.classList.remove('text-gray-900');
-                unitElement.classList.add('line-through', 'text-gray-400');
-                unitElement.classList.remove('text-gray-900');
-            } else {
-                itemNameElement.classList.remove('line-through', 'text-gray-400');
-                itemNameElement.classList.add('text-gray-900');
-                quantityElement.classList.remove('line-through', 'text-gray-400');
-                quantityElement.classList.add('text-gray-900');
-                unitElement.classList.remove('line-through', 'text-gray-400');
-                unitElement.classList.add('text-gray-900');
-            }
-        });
-    });
-
-
-
-    function updateShoppingItemStatus(checkbox, shoppingItemId) {
-        console.log(shoppingItemId);
-        const isPurchased = checkbox.checked;
-        const itemNameElement = document.getElementById('name-' + shoppingItemId);
-        const quantityElement = document.getElementById('quantity-' + shoppingItemId);
-        const unitElement = document.getElementById('unit-' + shoppingItemId);
-
-        fetch('/cooking/shopping-list/update/status/' + shoppingItemId, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                isPurchased: isPurchased
-            })
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok.');
-            }
-            console.log(response);
-            return response.json();
-        }).then(data => {
-            console.log(data);
-            // Tailwind CSS 클래스 동적 조작
-            if (isPurchased) {
-                itemNameElement.style.textDecoration = 'line-through';
-                itemNameElement.classList.add('text-gray-400');
-                itemNameElement.classList.remove('text-gray-900');
-
-                quantityElement.style.textDecoration = 'line-through';
-                quantityElement.classList.add('text-gray-400');
-                quantityElement.classList.remove('text-gray-900');
-
-                unitElement.style.textDecoration = 'line-through';
-                unitElement.classList.add('text-gray-400');
-                unitElement.classList.remove('text-gray-900');
-            } else {
-                itemNameElement.style.textDecoration = 'none';
-                itemNameElement.classList.remove('text-gray-400');
-                itemNameElement.classList.add('text-gray-900');
-
-                quantityElement.style.textDecoration = 'none';
-                quantityElement.classList.remove('text-gray-400');
-                quantityElement.classList.add('text-gray-900');
-
-                unitElement.style.textDecoration = 'none';
-                unitElement.classList.remove('text-gray-400');
-                unitElement.classList.add('text-gray-900');
-            }
-        }).catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
-    }
-
-
-    function toggleEdit(shoppingItemId) {
-        const editNameInput = document.getElementById('edit-name-' + shoppingItemId);
-        const editQuantityInput = document.getElementById('edit-quantity-' + shoppingItemId);
-        const editUnitSelect = document.getElementById('edit-unit-' + shoppingItemId); // 단위 수정을 위한 select 요소
-        const itemNameSpan = document.getElementById('name-' + shoppingItemId);
-        const quantitySpan = document.getElementById('quantity-' + shoppingItemId);
-        const unitSpan = document.getElementById('unit-' + shoppingItemId); // 현재 단위를 보여주는 span 요소
-        const editBtn = document.querySelector(`button[data-shoppingItem-id='${shoppingItemId}']`);
-        const isEditing = editBtn.getAttribute('data-action') === 'edit';
-
-        if (isEditing) {
-            // Edit 모드로 전환
-            itemNameSpan.classList.add('hidden');
-            editNameInput.classList.remove('hidden');
-            editNameInput.value = itemNameSpan.textContent;
-
-            quantitySpan.classList.add('hidden');
-            editQuantityInput.classList.remove('hidden');
-            editQuantityInput.value = quantitySpan.textContent;
-
-            unitSpan.classList.add('hidden');
-            editUnitSelect.classList.remove('hidden');
-            editUnitSelect.value = unitSpan.textContent; // 현재 단위 값을 select 요소의 값으로 설정
-
-            editBtn.querySelector('.edit-icon').classList.add('hidden');
-            editBtn.querySelector('.save-icon').classList.remove('hidden');
-            editBtn.setAttribute('data-action', 'save');
-        } else {
-            // Save 모드로 전환
-            const updatedItemName = editNameInput.value;
-            const updatedQuantity = editQuantityInput.value;
-            const updatedUnit = editUnitSelect.value; // 수정된 단위 값을 가져옵니다.
-
-            saveUpdates(shoppingItemId, updatedItemName, updatedQuantity, updatedUnit).then(() => {
-                itemNameSpan.textContent = updatedItemName;
-                itemNameSpan.classList.remove('hidden');
-                editNameInput.classList.add('hidden');
-
-                quantitySpan.textContent = updatedQuantity;
-                quantitySpan.classList.remove('hidden');
-                editQuantityInput.classList.add('hidden');
-
-                unitSpan.textContent = updatedUnit; // 단위 span 요소를 업데이트합니다.
-                unitSpan.classList.remove('hidden');
-                editUnitSelect.classList.add('hidden');
-
-                editBtn.querySelector('.edit-icon').classList.remove('hidden');
-                editBtn.querySelector('.save-icon').classList.add('hidden');
-                editBtn.setAttribute('data-action', 'edit');
-            }).catch(error => {
-                console.error('Error updating item:', error);
-                alert('Failed to update item. Please try again.');
+        if (!isEditing) {
+            // 편집 모드 활성화
+            cells.forEach((cell, index) => {
+                // 유통기한과 구입 날짜에는 날짜 입력 필드를 사용하고, quantity 입력 필드에는 숫자 입력 필드를 사용
+                const inputType = ['text', 'number', 'text', 'date', 'date', 'text', 'text', 'text'][index];
+                const inputValue = cell.innerText;
+                const inputName = ['ingredientName', 'quantity', 'unit', 'category', 'expirationDate', 'purchaseDate', 'status', 'memo'][index];
+                cell.innerHTML = `<input type="${inputType}" value="${inputValue}" class="edit-field pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" name="${inputName}" />`;
             });
+            row.classList.add('editing');
+        } else {
+            // 변경 사항 저장 로직을 여기에 구현
+            saveChanges(ingredientId, row);
         }
     }
 
+    function saveChanges(ingredientId, row) {
+        const formData = new FormData();
 
+        row.querySelectorAll('.edit-field').forEach(input => {
+            formData.append(input.name, input.value);
+        });
 
-
-    function saveUpdates(shoppingItemId, itemName, quantityText, unit) {
-
-        const quantity = parseInt(quantityText.replace(/[^0-9]/g, ''), 10);
-
-        console.log(shoppingItemId, itemName, quantity, unit);
-        return fetch(`/cooking/shopping-list/update/${shoppingItemId}`, {
+        fetch(`/cooking/ingredient/update/${ingredientId}`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                itemName: itemName,
-                quantity: quantity,
-                unit: unit
-            })
+            body: formData
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok.');
-                }
-                console.log(response);
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                console.log('Shopping item updated:', data);
-                return data;
+                console.log('Success:', data);
+                // 성공 로직 처리, 예: row를 편집 불가 상태로 전환
+                row.classList.remove('editing');
+                // input 필드를 다시 텍스트로 변환
+                row.querySelectorAll('.edit-field').forEach((input, index) => {
+                    const cell = input.parentElement;
+                    cell.innerText = input.value;
+                });
             })
-            .catch(error => {
-                console.error('Error updating shopping item:', error);
-                alert('Failed to update shopping item status. Please try again.');
-            });
+            .catch(error => console.error('Error:', error));
     }
-
 
 
 </script>
