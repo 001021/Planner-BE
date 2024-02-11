@@ -27,7 +27,7 @@ public class Ingredient {
     private String ingredientName;
 
     @Column(name = "quantity")
-    private float quantity;
+    private int quantity;
 
     @Column(name = "unit")
     private String unit; // 추후 Enum으로 변경
@@ -38,10 +38,6 @@ public class Ingredient {
     @Column(name = "expirationDate")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expirationDate;
-
-    @Column(name = "purchaseDate")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date purchaseDate;
 
     @Column(name = "storageLocation")
     private String storageLocation;

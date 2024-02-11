@@ -398,7 +398,7 @@
                     <!-- text-gray-800 dark:text-gray-100 -->
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="../../../templates/index.html"
+                            th:href="@{/}"
                     >
                         <svg
                                 class="w-5 h-5"
@@ -982,33 +982,28 @@
                         <div class="w-full overflow-x-auto">
                             <table class="w-full whitespace-no-wrap">
                                 <thead>
-                                <tr
-                                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-                                >
-                                    <th class="px-4 py-3 width-ingredient">재료명</th>
-                                    <th class="px-4 py-3 width-quantity">수량/단위</th>
-                                    <th class="px-4 py-3 width-category">카테고리</th>
-                                    <th class="px-4 py-3 width-expiration">유통기한</th>
-                                    <th class="px-4 py-3 width-purchase">구입 날짜</th>
-                                    <th class="px-4 py-3 width-status">상태</th>
-                                    <th class="px-4 py-3 width-memo">메모</th>
-                                    <th class="px-4 py-3 width-actions">수정/삭제</th>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3" style="width: auto">재료명</th>
+                                    <th class="px-4 py-3" style="width: auto">수량</th>
+                                    <th class="px-4 py-3" style="width: auto">단위</th>
+                                    <th class="px-4 py-3" style="width: auto">카테고리</th>
+                                    <th class="px-4 py-3" style="width: auto">유통기한</th>
+                                    <th class="px-4 py-3" style="width: auto">상태</th>
+                                    <th class="px-4 py-3" style="width: auto">메모</th>
+                                    <th class="px-4 py-3" style="width: auto">수정/삭제</th>
                                 </tr>
                                 </thead>
                                 <tbody
                                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                 <tr>
                                     <form th:action="@{/cooking/ingredient/save}" method="post">
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="ingredientName" placeholder="재료명" required /></td>
-                                        <td class="px-4 py-3">
-                                            <input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="number" name="quantity" placeholder="수량" step="0.01" />
-                                            <input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="unit" placeholder="단위"  />
-                                        </td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="category" placeholder="카테고리"  /></td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="date" name="expirationDate" placeholder="유통기한"  /></td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="date" name="purchaseDate" placeholder="구입 날짜"  /></td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="status" placeholder="상태"  /></td>
-                                        <td class="px-4 py-3"><input class="block pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="memo" placeholder="메모" /></td>
+                                        <td class="px-4 py-3"><input style="width: auto" class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="ingredientName" placeholder="재료명" required /></td>
+                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="number" name="quantity" placeholder="수량" step="1" /></td>
+                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="unit" placeholder="단위"  /></td>
+                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="category" placeholder="카테고리"  /></td>
+                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="date" name="expirationDate" placeholder="유통기한"  /></td>
+                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="status" placeholder="상태"  /></td>
+                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="memo" placeholder="메모" /></td>
                                         <td class="px-4 py-3">
                                             <button type="submit" class="inline-flex inset-y-0 right-0 px-4 justify-center text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                 추가
@@ -1018,10 +1013,10 @@
                                 </tr>
                                 <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${ingredientList}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
-                                    <td class="px-4 py-3 text-sm" th:text="${ingredient.quantity} + ' ' + ${ingredient.unit}"></td>
+                                    <td class="px-4 py-3 text-sm" th:text="${ingredient.quantity}"></td>
+                                    <td class="px-4 py-3 text-sm" th:text="${ingredient.unit}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${#dates.format(ingredient.expirationDate, 'yyyy-MM-dd')}"></td>
-                                    <td class="px-4 py-3 text-sm" th:text="${#dates.format(ingredient.purchaseDate, 'yyyy-MM-dd')}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.status}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.memo}"></td>
                                     <td class="px-4 py-3 text-sm">
@@ -1198,22 +1193,33 @@
     function toggleEdit(ingredientId) {
         const row = document.getElementById(`ingredient-${ingredientId}`);
         const isEditing = row.classList.contains('editing');
+        const editBtn = document.querySelector(`button[data-ingredient-id='${ingredientId}']`);
 
         const cells = row.querySelectorAll('td:not(:last-child)'); // 마지막 '수정/삭제' 셀을 제외한 모든 셀 선택
 
+
         if (!isEditing) {
+
+            editBtn.querySelector('.edit-icon').classList.add('hidden');
+            editBtn.querySelector('.save-icon').classList.remove('hidden');
+            editBtn.setAttribute('data-action', 'save');
             // 편집 모드 활성화
             cells.forEach((cell, index) => {
                 // 유통기한과 구입 날짜에는 날짜 입력 필드를 사용하고, quantity 입력 필드에는 숫자 입력 필드를 사용
-                const inputType = ['text', 'number', 'text', 'date', 'date', 'text', 'text', 'text'][index];
+                const inputType = ['text', 'text', 'text', 'text', 'date', 'text', 'text'][index];
                 const inputValue = cell.innerText;
-                const inputName = ['ingredientName', 'quantity', 'unit', 'category', 'expirationDate', 'purchaseDate', 'status', 'memo'][index];
-                cell.innerHTML = `<input type="${inputType}" value="${inputValue}" class="edit-field pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" name="${inputName}" />`;
+                const inputName = ['ingredientName', 'quantity', 'unit', 'category', 'expirationDate', 'status', 'memo'][index];
+                cell.innerHTML = `<input type="${inputType}" value="${inputValue}" class="edit-field mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" name="${inputName}" />`;
             });
             row.classList.add('editing');
         } else {
+
             // 변경 사항 저장 로직을 여기에 구현
             saveChanges(ingredientId, row);
+
+            editBtn.querySelector('.edit-icon').classList.remove('hidden');
+            editBtn.querySelector('.save-icon').classList.add('hidden');
+            editBtn.setAttribute('data-action', 'edit');
         }
     }
 
@@ -1224,6 +1230,8 @@
         row.querySelectorAll('.edit-field').forEach(input => {
             data[input.name] = input.value;
         });
+
+        console.log(data)
 
         // JSON 형식으로 서버에 데이터 전송
         fetch(`/cooking/ingredient/update/${ingredientId}`, {
@@ -1246,6 +1254,19 @@
                 updateRowFromData(row, data); // 이 함수는 서버로부터 받은 응답으로 행을 업데이트하는 가상의 함수입니다.
             })
             .catch(error => console.error('Error:', error));
+    }
+
+    function updateRowFromData(row, data) {
+        const cells = row.querySelectorAll('td:not(:last-child)');
+
+        cells[0].textContent = data.ingredientName; // 재료명
+        cells[1].textContent = data.quantity; // 수량
+        cells[2].textContent = data.unit; // 단위
+        cells[3].textContent = data.category; // 카테고리
+        cells[4].dateTime = data.expirationDate; // 유통기한
+        cells[5].textContent = data.status; // 상태
+        cells[6].textContent = data.memo; // 메모
+
     }
 
 
