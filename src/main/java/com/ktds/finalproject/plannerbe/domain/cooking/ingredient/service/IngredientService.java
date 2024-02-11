@@ -30,4 +30,9 @@ public class IngredientService {
         ingredientRepository.deleteById(id);
     }
 
+    public Ingredient findById(UUID id) {
+        return ingredientRepository.findById(id).orElse(null);
+    }
+
+
 }
