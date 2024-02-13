@@ -32,14 +32,14 @@ public class ShoppingListController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteShoppingList(@PathVariable UUID id) {
+    public String deleteShoppingList(@PathVariable("id") UUID id) {
         shoppingListService.deleteById(id);
         return "redirect:/cooking/shopping-list";
     }
 
     @PostMapping("/update/{id}")
     @ResponseBody
-    public ResponseEntity<?> updateShoppingList(@PathVariable UUID id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<?> updateShoppingList(@PathVariable("id") UUID id, @RequestBody Map<String, Object> updates) {
         try {
             ShoppingList shoppingList = shoppingListService.findById(id);
             if (shoppingList != null) {
@@ -61,7 +61,7 @@ public class ShoppingListController {
 
     @PostMapping("/update/status/{id}")
     @ResponseBody
-    public ResponseEntity<?> updateShoppingListPurchase(@PathVariable UUID id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<?> updateShoppingListPurchase(@PathVariable("id") UUID id, @RequestBody Map<String, Object> updates) {
         try {
             ShoppingList shoppingList = shoppingListService.findById(id);
             if (shoppingList != null) {
@@ -79,7 +79,7 @@ public class ShoppingListController {
 
     @PostMapping("/update/quantity/{id}")
     @ResponseBody
-    public ResponseEntity<?> updateShoppingListQuantity(@PathVariable UUID id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<?> updateShoppingListQuantity(@PathVariable("id") UUID id, @RequestBody Map<String, Object> updates) {
         try {
             ShoppingList shoppingList = shoppingListService.findById(id);
             if (shoppingList != null) {
