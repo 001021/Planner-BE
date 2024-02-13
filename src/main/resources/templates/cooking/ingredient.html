@@ -983,8 +983,7 @@
                                 <thead>
                                 <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                     <th class="px-4 py-3">재료명</th>
-                                    <th class="px-4 py-3">수량</th>
-                                    <th class="px-4 py-3">단위</th>
+                                    <th class="px-4 py-3">수량/단위</th>
                                     <th class="px-4 py-3">카테고리</th>
                                     <th class="px-4 py-3">유통기한</th>
                                     <th class="px-4 py-3">상태</th>
@@ -997,10 +996,48 @@
                                 <tr>
                                     <form th:action="@{/cooking/ingredient/save}" method="post">
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 176px" type="text" name="ingredientName" placeholder="재료명" required /></td>
-                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 56px" type="number" name="quantity" placeholder="수량" step="1" /></td>
-                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 56px" type="text" name="unit" placeholder="단위"  /></td>
+                                        <td class="px-4 py-3">
+                                            <input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" type="number" name="quantity" placeholder="수량" step="1" />
+                                            <select
+                                                class="block w-full mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select"
+                                                name="unit" style="width: 120px">
+                                            <option value="">단위 선택</option>
+
+                                            <optgroup label="무게">
+                                                <option value="g">그램(g)</option>
+                                                <option value="kg">킬로그램(kg)</option>
+                                                <option value="mg">밀리그램(mg)</option>
+                                                <option value="oz">온스(oz)</option>
+                                                <option value="lb">파운드(lb)</option>
+                                            </optgroup>
+
+                                            <optgroup label="부피">
+                                                <option value="L">리터(L)</option>
+                                                <option value="mL">밀리리터(mL)</option>
+                                                <option value="cup">컵(cup)</option>
+                                                <option value="tbsp">테이블스푼(tbsp)</option>
+                                                <option value="tsp">티스푼(tsp)</option>
+                                            </optgroup>
+
+                                            <optgroup label="수량">
+                                                <option value="개">개</option>
+                                                <option value="box">박스(box)</option>
+                                                <option value="pack">팩(pack)</option>
+                                                <option value="bundle">묶음(bundle)</option>
+                                                <option value="piece">조각(piece)</option>
+                                            </optgroup>
+
+                                            <optgroup label="기타">
+                                                <option value="slice">슬라이스(slice)</option>
+                                                <option value="pinch">꼬집(pinch)</option>
+                                                <option value="handful">한 줌(handful)</option>
+                                                <option value="can">캔(can)</option>
+                                                <option value="bottle">병(bottle)</option>
+                                            </optgroup>
+                                        </select>
+                                        </td>
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 86px" type="text" name="category" placeholder="카테고리"  /></td>
-                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 116px" type="date" name="expirationDate" placeholder="유통기한"  /></td>
+                                        <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 126px" type="date" name="expirationDate" placeholder="유통기한"  /></td>
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 86px" type="text" name="status" placeholder="상태"  /></td>
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="memo" placeholder="메모" /></td>
                                         <td class="px-4 py-3">
@@ -1012,8 +1049,10 @@
                                 </tr>
                                 <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${ingredientList}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
-                                    <td class="px-4 py-3 text-sm" th:text="${ingredient.quantity}"></td>
-                                    <td class="px-4 py-3 text-sm" th:text="${ingredient.unit}"></td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <span th:text="${ingredient.quantity}"></span>
+                                        <span th:text="${ingredient.unit}"></span>
+                                    </td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${#dates.format(ingredient.expirationDate, 'yyyy-MM-dd')}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.status}"></td>
@@ -1189,35 +1228,57 @@
     function toggleEdit(ingredientId) {
         const row = document.getElementById(`ingredient-${ingredientId}`);
         const isEditing = row.classList.contains('editing');
-        const editBtn = document.querySelector(`button[data-ingredient-id='${ingredientId}']`);
-
-        const cells = row.querySelectorAll('td:not(:last-child)'); // 마지막 '수정/삭제' 셀을 제외한 모든 셀 선택
-
 
         if (!isEditing) {
-
-            editBtn.querySelector('.edit-icon').classList.add('hidden');
-            editBtn.querySelector('.save-icon').classList.remove('hidden');
-            editBtn.setAttribute('data-action', 'save');
-            // 편집 모드 활성화
+            // 편집 모드로 전환
+            const cells = row.querySelectorAll('td');
             cells.forEach((cell, index) => {
-                // 유통기한과 구입 날짜에는 날짜 입력 필드를 사용하고, quantity 입력 필드에는 숫자 입력 필드를 사용
-                const inputType = ['text', 'text', 'text', 'text', 'date', 'text', 'text'][index];
-                const inputValue = cell.innerText;
-                const inputName = ['ingredientName', 'quantity', 'unit', 'category', 'expirationDate', 'status', 'memo'][index];
-                cell.innerHTML = `<input type="${inputType}" value="${inputValue}" class="edit-field mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" name="${inputName}" />`;
+                if (index === 0) { // 재료명
+                    cell.innerHTML = `<input type="text" value="${cell.innerText}" class="edit-field form-input" />`;
+                } else if (index === 1) { // 수량과 단위 합친 셀
+                    const [quantity, unit] = cell.innerText.split(' ');
+                    cell.innerHTML = `
+                        <input type="number" value="${quantity}" class="edit-field form-input" style="width: 56px" />
+                        <select class="edit-field form-select" style="width: 120px">
+                            <option value="g">그램(g)</option>
+                            <option value="kg">킬로그램(kg)</option>
+                            <option value="mg">밀리그램(mg)</option>
+                            <option value="oz">온스(oz)</option>
+                            <option value="lb">파운드(lb)</option>
+                            <option value="L">리터(L)</option>
+                            <option value="mL">밀리리터(mL)</option>
+                            <option value="cup">컵(cup)</option>
+                            <option value="tbsp">테이블스푼(tbsp)</option>
+                            <option value="tsp">티스푼(tsp)</option>
+                            <option value="개">개</option>
+                            <option value="box">박스(box)</option>
+                            <option value="pack">팩(pack)</option>
+                            <option value="bundle">묶음(bundle)</option>
+                            <option value="piece">조각(piece)</option>
+                            <option value="slice">슬라이스(slice)</option>
+                            <option value="pinch">꼬집(pinch)</option>
+                            <option value="handful">한 줌(handful)</option>
+                            <option value="can">캔(can)</option>
+                            <option value="bottle">병(bottle)</option>
+                        </select>
+                    `;
+                    cell.querySelector('select').value = unit;
+                } else if (index === 2) { // 카테고리
+                    cell.innerHTML = `<input type="text" value="${cell.innerText}" class="edit-field form-input" />`;
+                } else if (index === 3) { // 유통기한
+                    cell.innerHTML = `<input type="date" value="${cell.innerText}" class="edit-field form-input" />`;
+                } else if (index === 4) { // 상태
+                    cell.innerHTML = `<input type="text" value="${cell.innerText}" class="edit-field form-input" />`;
+                } else if (index === 5) { // 메모
+                    cell.innerHTML = `<input type="text" value="${cell.innerText}" class="edit-field form-input" />`;
+                } // 수정/삭제 버튼 셀은 처리하지 않음
             });
             row.classList.add('editing');
         } else {
-
-            // 변경 사항 저장 로직을 여기에 구현
             saveChanges(ingredientId, row);
-
-            editBtn.querySelector('.edit-icon').classList.remove('hidden');
-            editBtn.querySelector('.save-icon').classList.add('hidden');
-            editBtn.setAttribute('data-action', 'edit');
         }
     }
+
 
     function saveChanges(ingredientId, row) {
         const data = {};
@@ -1256,12 +1317,11 @@
         const cells = row.querySelectorAll('td:not(:last-child)');
 
         cells[0].textContent = data.ingredientName; // 재료명
-        cells[1].textContent = data.quantity; // 수량
-        cells[2].textContent = data.unit; // 단위
-        cells[3].textContent = data.category; // 카테고리
-        cells[4].textContent = formatDate(data.expirationDate); // 유통기한
-        cells[5].textContent = data.status; // 상태
-        cells[6].textContent = data.memo; // 메모
+        cells[1].textContent = `${data.quantity} ${data.unit}`;
+        cells[2].textContent = data.category; // 카테고리
+        cells[3].textContent = formatDate(data.expirationDate); // 유통기한
+        cells[4].textContent = data.status; // 상태
+        cells[5].textContent = data.memo; // 메모
 
     }
 
@@ -1276,19 +1336,3 @@
 
 
 </script>
-
-<style>
-    .width-ingredient { width: 20%; }
-    .width-quantity { width: 10%; }
-    .width-category { width: 15%; }
-    .width-expiration, .width-purchase { width: 12%; }
-    .width-status { width: 10%; }
-    .width-memo { width: 15%; }
-    .width-actions { width: 8%; }
-    @media (max-width: 768px) {
-        .width-ingredient, .width-category, .width-expiration, .width-purchase, .width-status, .width-memo, .width-actions {
-            width: auto; /* 또는 다른 너비값 */
-        }
-    }
-
-</style>
