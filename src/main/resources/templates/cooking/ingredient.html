@@ -1001,7 +1001,8 @@
                                 <tbody
                                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                 <tr>
-                                    <form th:action="@{/cooking/ingredient/save}" method="post">
+                                    <form th:action="@{/cooking/ingredient/save}" method="post" id="ingredientForm">
+                                        <input type="hidden" name="storageLocation" id="storageLocationRefrigerator" value="냉장고" />
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 176px" type="text" name="ingredientName" placeholder="재료명" required /></td>
                                         <td class="px-4 py-3">
                                             <input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" type="number" name="quantity" placeholder="수량" step="1" />
@@ -1054,14 +1055,14 @@
                                             </select>
                                         </td>
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="memo" placeholder="메모" /></td>
-                                        <td class="px-4 py-3">
-                                            <button type="submit" class="inline-flex inset-y-0 right-0 px-4 justify-center text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                        <td style="text-align: center">
+                                            <button type="submit" class="inline-flex items-center inset-y-0 right-0 px-4 py-2 justify-center text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                 추가
                                             </button>
                                         </td>
                                     </form>
                                 </tr>
-                                <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${ingredientList}" class="text-gray-700 dark:text-gray-400">
+                                <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${refrigeratorIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
                                         <span th:text="${ingredient.quantity}"></span>
@@ -1198,7 +1199,6 @@
                         <button
                                 class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
                         >
-                          4
                         </button>
                       </li>
                       <li>
@@ -1262,6 +1262,7 @@
                                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                 <tr>
                                     <form th:action="@{/cooking/ingredient/save}" method="post">
+                                        <input type="hidden" name="storageLocation" id="storageLocationFreezer" value="냉동고" />
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 176px" type="text" name="ingredientName" placeholder="재료명" required /></td>
                                         <td class="px-4 py-3">
                                             <input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" type="number" name="quantity" placeholder="수량" step="1" />
@@ -1314,14 +1315,14 @@
                                             </select>
                                         </td>
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="memo" placeholder="메모" /></td>
-                                        <td class="px-4 py-3">
-                                            <button type="submit" class="inline-flex inset-y-0 right-0 px-4 justify-center text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                        <td style="text-align: center">
+                                            <button type="submit" class="inline-flex items-center inset-y-0 right-0 px-4 py-2 justify-center text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" >
                                                 추가
                                             </button>
                                         </td>
                                     </form>
                                 </tr>
-                                <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${ingredientList}" class="text-gray-700 dark:text-gray-400">
+                                <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${freezerIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
                                         <span th:text="${ingredient.quantity}"></span>
@@ -1522,6 +1523,7 @@
                                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                 <tr>
                                     <form th:action="@{/cooking/ingredient/save}" method="post">
+                                        <input type="hidden" name="storageLocation" id="storageLocationRoomTemp" value="실온" />
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 176px" type="text" name="ingredientName" placeholder="재료명" required /></td>
                                         <td class="px-4 py-3">
                                             <input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" type="number" name="quantity" placeholder="수량" step="1" />
@@ -1574,14 +1576,14 @@
                                             </select>
                                         </td>
                                         <td class="px-4 py-3"><input class="block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" type="text" name="memo" placeholder="메모" /></td>
-                                        <td class="px-4 py-3">
-                                            <button type="submit" class="inline-flex inset-y-0 right-0 px-4 justify-center text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                        <td style="text-align: center">
+                                            <button type="submit" class="inline-flex items-center inset-y-0 right-0 px-4 py-2 justify-center text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                 추가
                                             </button>
                                         </td>
                                     </form>
                                 </tr>
-                                <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${ingredientList}" class="text-gray-700 dark:text-gray-400">
+                                <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${roomIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
                                         <span th:text="${ingredient.quantity}"></span>
@@ -1773,34 +1775,178 @@
 
 <script th:inline="javascript">
 
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetContent = document.querySelector(tab.getAttribute('href'));
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectedTab = localStorage.getItem('selectedTab') || 'Refrigerator';
 
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-            targetContent.classList.remove('hidden');
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', async (e) => {
+                e.preventDefault();
 
-            document.querySelectorAll('.tab').forEach(t => {
-                t.classList.remove('bg-purple-600', 'text-white');
-                t.classList.add('bg-transparent', 'text-gray-600');
+                const targetContent = document.querySelector(tab.getAttribute('href'));
+                const storageLocation = tab.getAttribute('href').substring(1);
+
+                localStorage.setItem('selectedTab', storageLocation);
+
+                const data = await loadDataForStorageLocation(storageLocation);
+                updateTableForStorageLocation(storageLocation, data);
+
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                targetContent.classList.remove('hidden');
+
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('bg-purple-600', 'text-white');
+                    t.classList.add('bg-transparent', 'text-gray-600');
+                });
+
+                tab.classList.add('bg-purple-600', 'text-white');
+                tab.classList.remove('bg-transparent', 'text-gray-600');
             });
+        });
+        document.querySelector(`.tab[href="#${selectedTab}"]`).click();
 
-            tab.classList.add('bg-purple-600', 'text-white');
-            tab.classList.remove('bg-transparent', 'text-gray-600');
+        document.querySelectorAll('table tbody').forEach(tableBody => {
+            tableBody.addEventListener('click', function(event) {
+                // 이벤트가 발생한 요소가 수정 버튼인지 확인
+                if (event.target.closest('button[data-action="edit"]')) {
+                    const ingredientId = event.target.closest('button').getAttribute('data-ingredient-id');
+                    // 수정 로직 호출
+                    toggleEdit(ingredientId);
+                }
+            });
         });
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        // 기본으로 냉장고 탭 활성화
-        document.querySelector('.tab[href="#Refrigerator"]').click();
-    });
+
+    // 데이터 로드 함수
+    async function loadDataForStorageLocation(storageLocation) {
+
+        const url = `/cooking/ingredient/${storageLocation}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Network response was not ok (${response.status})`);
+            }
+            const data = await response.json(); // JSON 형식으로 데이터 변환
+            return data; // 변환된 데이터를 반환
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return []; // 에러 발생 시 빈 배열 반환
+        }
+    }
 
 
-    function toggleEdit(ingredientId) {
-        const row = document.getElementById(`ingredient-${ingredientId}`);
+    // 테이블 업데이트 함수
+    function updateTableForStorageLocation(storageLocation, data) {
+        const tableBody = document.querySelector(`#${storageLocation} tbody`);
+
+        const firstRow = tableBody.querySelector('tr:first-child');
+
+        // 첫 번째 행을 제외한 모든 행을 삭제합니다.
+        while (firstRow.nextElementSibling) {
+            firstRow.nextElementSibling.remove();
+        }
+
+        data.forEach(ingredient => {
+            const row = document.createElement('tr');
+
+            const dateString = ingredient.expirationDate;
+            const date = new Date(dateString);
+            const formattedDate = date.toLocaleDateString("ko-KR", { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+            let statusSpan;
+            if (ingredient.status === '싱싱함') {
+                statusSpan = `<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">${ingredient.status}</span>`;
+            } else if (ingredient.status === '보통') {
+                statusSpan = `<span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700">${ingredient.status}</span>`;
+            } else if (ingredient.status === '주의') {
+                statusSpan = `<span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">${ingredient.status}</span>`;
+            } else if (ingredient.status === '썩음') {
+                statusSpan = `<span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">${ingredient.status}</span>`;
+            } else {
+                statusSpan = `<span>${ingredient.status}</span>`;
+            }
+            row.innerHTML = `
+                                    <td class="px-4 py-3 text-sm">${ingredient.ingredientName}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <span>${ingredient.quantity}</span>
+                                        <span>${ingredient.unit}</span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">${ingredient.category}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        ${formattedDate}
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        ${statusSpan}
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">${ingredient.memo}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <div class="flex items-center space-x-4 text-sm">
+                                            <button
+                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                    aria-label="Edit"
+                                                    th:attr="data-ingredient-id=${ingredient.id}" data-action="edit"
+                                                    onclick="toggleEdit(this, '${ingredient.id}')"
+                                            >
+                                                <svg
+                                                        class="edit-icon w-5 h-5"
+                                                        aria-hidden="true"
+                                                        fill="currentColor"
+                                                        viewBox="0 0 20 20"
+                                                >
+                                                    <path
+                                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                                    ></path>
+                                                </svg>
+
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 20 20"
+                                                     fill="currentColor"
+                                                     class="save-icon w-5 h-5 hidden"
+                                                     aria-hidden="true"
+                                                >
+                                                    <path
+                                                            fill-rule="evenodd"
+                                                            d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
+                                                </svg>
+
+
+                                            </button>
+                                            <form action="/cooking/ingredient/delete/${ingredient.id}" method="post"
+                                                  class="inline">
+                                                <input type="hidden" name="_method" value="delete" data-ingredient-id="${ingredient.id}" />
+                                                <button
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Delete"
+                                                >
+                                                    <svg
+                                                            class="w-5 h-5"
+                                                            aria-hidden="true"
+                                                            fill="currentColor"
+                                                            viewBox="0 0 20 20"
+                                                    >
+                                                        <path
+                                                                fill-rule="evenodd"
+                                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                                clip-rule="evenodd"
+                                                        ></path>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+        `;
+            tableBody.appendChild(row); // 새 행을 테이블 바디에 추가
+        });
+    }
+
+
+
+
+    function toggleEdit(button, ingredientId) {
+        const row = button.closest('tr');
         const isEditing = row.classList.contains('editing');
-        const editBtn = document.querySelector(`button[data-ingredient-id='${ingredientId}']`);
+        const editBtn = button.querySelector('.edit-icon').closest('button');
 
         if (!isEditing) {
             editBtn.querySelector('.edit-icon').classList.add('hidden');
@@ -1914,6 +2060,9 @@
                 console.log('Success:', data);
                 // 성공 처리 로직
                 row.classList.remove('editing');
+                const editBtn = row.querySelector('button[data-action="save"]');
+                editBtn.querySelector('.edit-icon').classList.remove('hidden');
+                editBtn.querySelector('.save-icon').classList.add('hidden');
                 updateRowFromData(row, data); // 이 함수는 서버로부터 받은 응답으로 행을 업데이트하는 가상의 함수입니다.
             })
             .catch(error => console.error('Error:', error));
@@ -1951,6 +2100,7 @@
         cells[5].textContent = data.memo; // 메모
 
     }
+
 
     function formatDate(dateString) {
         const date = new Date(dateString);
