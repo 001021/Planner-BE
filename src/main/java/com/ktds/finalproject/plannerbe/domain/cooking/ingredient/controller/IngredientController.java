@@ -2,10 +2,6 @@ package com.ktds.finalproject.plannerbe.domain.cooking.ingredient.controller;
 
 import com.ktds.finalproject.plannerbe.domain.cooking.ingredient.dto.Ingredient;
 import com.ktds.finalproject.plannerbe.domain.cooking.ingredient.service.IngredientService;
-import com.ktds.finalproject.plannerbe.domain.cooking.shoppinglist.dto.ShoppingList;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,7 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -28,10 +27,30 @@ public class IngredientController {
 
     @GetMapping
     public String listIngredient(Model model) {
-        List<Ingredient> ingredientList = ingredientService.findAllByOrderByIngredientNameDesc();
-        model.addAttribute("ingredientList", ingredientList);
+        model.addAttribute("refrigeratorIngredients", ingredientService.findByStorageLocation("Refrigerator"));
+        model.addAttribute("freezerIngredients", ingredientService.findByStorageLocation("Freezer"));
+        model.addAttribute("roomIngredients", ingredientService.findByStorageLocation("Room"));
         return "cooking/ingredient";
     }
+
+    @GetMapping("/Refrigerator")
+    public ResponseEntity<List<Ingredient>> getRefrigeratorIngredients() {
+        List<Ingredient> ingredients = ingredientService.findByStorageLocation("냉장고");
+        return ResponseEntity.ok(ingredients);
+    }
+
+    @GetMapping("/Freezer")
+    public ResponseEntity<List<Ingredient>> getFreezerIngredients() {
+        List<Ingredient> ingredients = ingredientService.findByStorageLocation("냉동고");
+        return ResponseEntity.ok(ingredients);
+    }
+
+    @GetMapping("/RoomTemp")
+    public ResponseEntity<List<Ingredient>> getRoomIngredients() {
+        List<Ingredient> ingredients = ingredientService.findByStorageLocation("실온");
+        return ResponseEntity.ok(ingredients);
+    }
+
 
     @PostMapping("/save")
     public String save(@ModelAttribute Ingredient newIngredient) {
@@ -40,7 +59,7 @@ public class IngredientController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteIngredient(@PathVariable UUID id) {
+    public String deleteIngredient(@PathVariable("id") UUID id) {
         ingredientService.deleteById(id);
         return "redirect:/cooking/ingredient";
     }
@@ -48,26 +67,24 @@ public class IngredientController {
     @PostMapping("/update/{id}")
     @ResponseBody
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public ResponseEntity<?> updateIngredient(@PathVariable UUID id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<?> updateIngredient(@PathVariable("id") UUID id, @RequestBody Map<String, Object> updates) {
         try {
             Ingredient ingredient = ingredientService.findById(id);
             log.info("ingredient: " + ingredient);
             if (ingredient != null) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                log.info("updates: " + updates);
                 String ingredientName = (String) updates.get("ingredientName");
-                log.info("ingredientName: " + ingredientName);
-                Integer quantity = Integer.parseInt((String) updates.get("quantity"));
-                log.info("quantity: " + quantity);
+                int quantity = Integer.parseInt((String) updates.get("quantity"));
                 String unit = (String) updates.get("unit");
-                log.info("unit: " + unit);
                 String expirationDateStr = (String) updates.get("expirationDate");
-                Date expirationDate = dateFormat.parse(expirationDateStr);
-                log.info("expirationDate: " + expirationDate);
+                Date expirationDate;
+                if (expirationDateStr == null || expirationDateStr.isEmpty()) {
+                    expirationDate = null;
+                } else {
+                    expirationDate = dateFormat.parse(expirationDateStr);
+                }
                 String status = (String) updates.get("status");
-                log.info("status: " + status);
                 String memo = (String) updates.get("memo");
-                log.info("memo: " + memo);
 
                 ingredient.setIngredientName(ingredientName);
                 ingredient.setQuantity(quantity);

@@ -35,4 +35,11 @@ public class IngredientService {
     }
 
 
+    public List<Ingredient> findByStorageLocation(String location) {
+        return ingredientRepository.findByStorageLocation(location);
+    }
+
+    public Object findAllByOrderByCreatedTime() {
+        return ingredientRepository.findAllByOrderByCreatedTime();
+    }
 }

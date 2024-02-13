@@ -11,4 +11,8 @@ import java.util.UUID;
 public interface IngredientRepository extends JpaRepository<Ingredient, UUID> {
 
     List<Ingredient> findAllByOrderByIngredientNameDesc();
+
+    List<Ingredient> findByStorageLocation(String location);
+
+    List<Ingredient> findAllByOrderByCreatedTime();
 }
