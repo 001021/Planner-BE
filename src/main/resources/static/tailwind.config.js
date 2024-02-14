@@ -161,6 +161,15 @@ module.exports = {
       },
     },
     extend: {
+      keyframes: {
+        blink: {
+          '0%, 100%': { opacity: '0' },
+          '50%': { opacity: '1' },
+        },
+      },
+      animation: {
+        blink: 'blink 1.4s infinite',
+      },
       maxHeight: {
         '0': '0',
         xl: '36rem',
