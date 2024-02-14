@@ -5,12 +5,3 @@
 body {
     @apply font-sans;
   }
-
-.form-checkbox:focus {
-    box-shadow: 0 0 0 3px rgba(126,58,242,.5);
-    border-color: #7e3af2;
-}
-
-.strike-through {
-    text-decoration: line-through;
-}
