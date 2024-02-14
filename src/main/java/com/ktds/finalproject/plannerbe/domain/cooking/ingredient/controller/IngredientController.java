@@ -27,27 +27,27 @@ public class IngredientController {
 
     @GetMapping
     public String listIngredient(Model model) {
-        model.addAttribute("refrigeratorIngredients", ingredientService.findByStorageLocation("Refrigerator"));
-        model.addAttribute("freezerIngredients", ingredientService.findByStorageLocation("Freezer"));
-        model.addAttribute("roomIngredients", ingredientService.findByStorageLocation("Room"));
+        model.addAttribute("refrigeratorIngredients", ingredientService.findByStorageLocationOrderByCreatedTimeDesc("냉장고"));
+        model.addAttribute("freezerIngredients", ingredientService.findByStorageLocationOrderByCreatedTimeDesc("냉동고"));
+        model.addAttribute("roomIngredients", ingredientService.findByStorageLocationOrderByCreatedTimeDesc("실온"));
         return "cooking/ingredient";
     }
 
     @GetMapping("/Refrigerator")
     public ResponseEntity<List<Ingredient>> getRefrigeratorIngredients() {
-        List<Ingredient> ingredients = ingredientService.findByStorageLocation("냉장고");
+        List<Ingredient> ingredients = ingredientService.findByStorageLocationOrderByCreatedTimeDesc("냉장고");
         return ResponseEntity.ok(ingredients);
     }
 
     @GetMapping("/Freezer")
     public ResponseEntity<List<Ingredient>> getFreezerIngredients() {
-        List<Ingredient> ingredients = ingredientService.findByStorageLocation("냉동고");
+        List<Ingredient> ingredients = ingredientService.findByStorageLocationOrderByCreatedTimeDesc("냉동고");
         return ResponseEntity.ok(ingredients);
     }
 
     @GetMapping("/RoomTemp")
     public ResponseEntity<List<Ingredient>> getRoomIngredients() {
-        List<Ingredient> ingredients = ingredientService.findByStorageLocation("실온");
+        List<Ingredient> ingredients = ingredientService.findByStorageLocationOrderByCreatedTimeDesc("실온");
         return ResponseEntity.ok(ingredients);
     }
 
