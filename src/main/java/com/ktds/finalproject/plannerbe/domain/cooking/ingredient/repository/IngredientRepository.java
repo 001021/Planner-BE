@@ -12,7 +12,7 @@ public interface IngredientRepository extends JpaRepository<Ingredient, UUID> {
 
     List<Ingredient> findAllByOrderByIngredientNameDesc();
 
-    List<Ingredient> findByStorageLocation(String location);
+    List<Ingredient> findByStorageLocationOrderByCreatedTimeDesc(String location);
 
-    List<Ingredient> findAllByOrderByCreatedTime();
+    List<Ingredient> findAllByOrderByCreatedTimeDesc();
 }
