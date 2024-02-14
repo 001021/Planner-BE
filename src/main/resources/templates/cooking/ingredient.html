@@ -1002,7 +1002,7 @@
                                 <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${refrigeratorIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
-                                        <input type="number" name="quantity" data-ingredient-id="${ingredient.id}" class="quantity-input block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" placeholder="수량" step="1" />
+                                        <span th:text="${ingredient.quantity}"></span>
                                         <span th:text="${ingredient.unit}"></span>
                                     </td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
@@ -1262,7 +1262,7 @@
                                 <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${freezerIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
-                                        <input type="number" name="quantity" data-ingredient-id="${ingredient.id}" class="quantity-input block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" placeholder="수량" step="1" />
+                                        <span th:text="${ingredient.quantity}"></span>
                                         <span th:text="${ingredient.unit}"></span>
                                     </td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
@@ -1523,7 +1523,7 @@
                                 <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${roomIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
-                                        <input type="number" name="quantity" data-ingredient-id="${ingredient.id}" class="quantity-input block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" placeholder="수량" step="1" />
+                                        <span th:text="${ingredient.quantity}"></span>
                                         <span th:text="${ingredient.unit}"></span>
                                     </td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
@@ -1833,7 +1833,6 @@
                 }
             });
         });
-
     });
 
 
