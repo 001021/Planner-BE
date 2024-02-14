@@ -1002,7 +1002,7 @@
                                 <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${refrigeratorIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
-                                        <span th:text="${ingredient.quantity}"></span>
+                                        <input type="number" name="quantity" data-ingredient-id="${ingredient.id}" class="quantity-input block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" placeholder="수량" step="1" />
                                         <span th:text="${ingredient.unit}"></span>
                                     </td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
@@ -1262,7 +1262,7 @@
                                 <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${freezerIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
-                                        <span th:text="${ingredient.quantity}"></span>
+                                        <input type="number" name="quantity" data-ingredient-id="${ingredient.id}" class="quantity-input block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" placeholder="수량" step="1" />
                                         <span th:text="${ingredient.unit}"></span>
                                     </td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
@@ -1523,7 +1523,7 @@
                                 <tr th:id="${'ingredient-' + ingredient.id}" th:each="ingredient : ${roomIngredients}" class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.ingredientName}"></td>
                                     <td class="px-4 py-3 text-sm">
-                                        <span th:text="${ingredient.quantity}"></span>
+                                        <input type="number" name="quantity" data-ingredient-id="${ingredient.id}" class="quantity-input block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 66px" placeholder="수량" step="1" />
                                         <span th:text="${ingredient.unit}"></span>
                                     </td>
                                     <td class="px-4 py-3 text-sm" th:text="${ingredient.category}"></td>
@@ -1833,6 +1833,7 @@
                 }
             });
         });
+
     });
 
 
@@ -1888,7 +1889,7 @@
             row.innerHTML = `
                                     <td class="px-4 py-3 text-sm">${ingredient.ingredientName}</td>
                                     <td class="px-4 py-3 text-sm">
-                                        <span>${ingredient.quantity}</span>
+                                        <input type="number" name="quantity" data-ingredient-id="${ingredient.id}" class="quantity-input block mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" style="width: 56px" value=${ingredient.quantity} step="1" />
                                         <span>${ingredient.unit}</span>
                                     </td>
                                     <td class="px-4 py-3 text-sm">${ingredient.category}</td>
@@ -1987,6 +1988,14 @@
                         >
                             <option value="">단위 선택</option>
 
+                                            <optgroup label="수량">
+                                                <option value="개">개</option>
+                                                <option value="box">박스(box)</option>
+                                                <option value="pack">팩(pack)</option>
+                                                <option value="bundle">묶음(bundle)</option>
+                                                <option value="piece">조각(piece)</option>
+                                            </optgroup>
+
                                             <optgroup label="무게">
                                                 <option value="g">그램(g)</option>
                                                 <option value="kg">킬로그램(kg)</option>
@@ -2003,13 +2012,6 @@
                                                 <option value="tsp">티스푼(tsp)</option>
                                             </optgroup>
 
-                                            <optgroup label="수량">
-                                                <option value="개">개</option>
-                                                <option value="box">박스(box)</option>
-                                                <option value="pack">팩(pack)</option>
-                                                <option value="bundle">묶음(bundle)</option>
-                                                <option value="piece">조각(piece)</option>
-                                            </optgroup>
 
                                             <optgroup label="기타">
                                                 <option value="slice">슬라이스(slice)</option>
@@ -2128,6 +2130,32 @@
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     }
+
+    document.addEventListener('change', function(event) {
+        if (event.target.matches('.quantity-input')) {
+            const ingredientId = event.target.dataset.ingredientId;
+            const newQuantity = event.target.value;
+
+            // AJAX 요청으로 서버에 수량 업데이트 요청
+            fetch(`/cooking/ingredient/update/quantity/${ingredientId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ quantity: newQuantity })
+            })
+                .then(response => {
+                    console.log(response);
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    });
+
 
 
 
