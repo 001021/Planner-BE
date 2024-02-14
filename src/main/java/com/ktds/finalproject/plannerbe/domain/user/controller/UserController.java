@@ -4,10 +4,11 @@ import com.ktds.finalproject.plannerbe.domain.user.dto.User;
 import com.ktds.finalproject.plannerbe.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/users")
+@Controller
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -15,10 +16,11 @@ public class UserController {
 
     @GetMapping("/join")
     public String joinForm() {
-        return "join";
+        return "create-account";
     }
 
     @PostMapping("/join")
+    @ResponseBody
     public ResponseEntity<User> join(@RequestBody User user) {
         return ResponseEntity.ok(userService.registerUser(user));
     }
