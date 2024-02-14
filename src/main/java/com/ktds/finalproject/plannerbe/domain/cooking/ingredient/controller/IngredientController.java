@@ -104,5 +104,25 @@ public class IngredientController {
         }
     }
 
+    @PostMapping("/update/quantity/{id}")
+    @ResponseBody
+    public ResponseEntity<?> updateIngredientQuantity(@PathVariable("id") UUID id, @RequestBody Map<String, Object> updates) {
+        try {
+            Ingredient ingredient = ingredientService.findById(id);
+            if (ingredient != null) {
+                int quantity = Integer.parseInt((String) updates.get("quantity"));
+                ingredient.setQuantity(quantity);
+                ingredientService.save(ingredient);
+                return ResponseEntity.ok(ingredient);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println("Error updating ingredient: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating ingredient");
+        }
+    }
+
+
 
 }
