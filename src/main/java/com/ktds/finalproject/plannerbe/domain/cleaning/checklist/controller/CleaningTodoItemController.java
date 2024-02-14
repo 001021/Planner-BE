@@ -31,12 +31,6 @@ public class CleaningTodoItemController {
         return "redirect:/cleaning-todos";
     }
 
-    @PostMapping("/{id}/complete")
-    public String complete(@ModelAttribute("newTodo") CleaningTodoItem cleaningTodoItem) {
-        cleaningTodoItemService.save(cleaningTodoItem);
-        return "redirect:/cleaning-todos";
-    }
-
     @PostMapping("/delete/{id}")
     public String deleteTodo(@PathVariable UUID id) {
         cleaningTodoItemService.deleteById(id);
