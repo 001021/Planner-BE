@@ -32,14 +32,14 @@ public class CleaningTodoItemController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteTodo(@PathVariable UUID id) {
+    public String deleteTodo(@PathVariable("id") UUID id) {
         cleaningTodoItemService.deleteById(id);
         return "redirect:/cleaning-todos";
     }
 
     @PostMapping("/update/{id}")
     @ResponseBody
-    public ResponseEntity<?> updateTodo(@PathVariable UUID id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<?> updateTodo(@PathVariable("id") UUID id, @RequestBody Map<String, Object> updates) {
         try {
             CleaningTodoItem todoItem = cleaningTodoItemService.findById(id);
             if (todoItem != null) {
@@ -57,7 +57,7 @@ public class CleaningTodoItemController {
 
     @PostMapping("/update/status/{id}")
     @ResponseBody
-    public ResponseEntity<?> updateTodoStatus(@PathVariable UUID id) {
+    public ResponseEntity<?> updateTodoStatus(@PathVariable("id") UUID id) {
         try {
             CleaningTodoItem todoItem = cleaningTodoItemService.findById(id);
             if (todoItem != null) {
