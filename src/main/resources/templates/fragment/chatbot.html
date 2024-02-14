@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="chatbot">
+<body>
+<div>
+    <button id="chatbot-button" class="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full z-50" style="" onclick="openChatbot()">
+        Chat
+    </button>
+</div>
+
+<div id="chatbot-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden">
+    <div class="flex items-center justify-center h-full">
+        <div class="bg-white rounded-lg p-4 w-96">
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl font-bold">Chatbot</h1>
+                <button class="text-red-500" onclick="document.getElementById('chatbot-modal').style.display = 'none'">Close</button>
+            </div>
+            <div class="h-96 bg-gray-100 mt-4"></div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function openChatbot() {
+        // Open the chatbot modal
+        document.getElementById('chatbot-modal').style.display = 'block';
+
+    }
+    /*]]>*/
+</script>
+</body>
+</html>
