@@ -137,6 +137,15 @@
 <!--                    <span class="ml-2" aria-hidden="true">+</span>-->
 <!--                </a>-->
 <!--            </div>-->
+            <div class="px-6 my-6">
+                <a
+                        class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                        th:href="@{/users/join}"
+                >
+                    회원가입
+                    <span class="ml-2" aria-hidden="true">+</span>
+                </a>
+            </div>
         </div>
     </aside>
     <!-- Mobile sidebar -->
@@ -286,6 +295,15 @@
 <!--                    <span class="ml-2" aria-hidden="true">+</span>-->
 <!--                </a>-->
 <!--            </div>-->
+            <div class="px-6 my-6">
+                <a
+                        class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                        th:href="@{/users/join}"
+                >
+                    회원가입
+                    <span class="ml-2" aria-hidden="true">+</span>
+                </a>
+            </div>
         </div>
     </aside>
     <div class="flex flex-col flex-1">
@@ -1366,7 +1384,6 @@
         const tableBody = document.querySelector(`#${storageLocation} tbody`);
 
         const firstRow = tableBody.querySelector('tr:first-child');
-
         // 첫 번째 행을 제외한 모든 행을 삭제
         while (firstRow.nextElementSibling) {
             firstRow.nextElementSibling.remove();
