@@ -54,8 +54,28 @@ public class IngredientController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Ingredient newIngredient) {
+        System.out.println("newIngredient: " + newIngredient);
         ingredientService.save(newIngredient);
         return "redirect:/cooking/ingredient";
+    }
+
+    @PostMapping("/save-in-modal")
+    @ResponseBody
+    public ResponseEntity<?> saveInModal(@RequestBody Map<String, Object> newIngredient) {
+
+        try {
+            Ingredient ingredient = new Ingredient();
+            ingredient.setIngredientName((String) newIngredient.get("ingredientName"));
+            ingredient.setQuantity(Integer.parseInt((String) newIngredient.get("quantity")));
+            ingredient.setUnit((String) newIngredient.get("unit"));
+            ingredient.setStorageLocation((String) newIngredient.get("storageLocation"));
+
+            ingredientService.save(ingredient);
+            return ResponseEntity.ok(ingredient);
+        } catch (Exception e) {
+            log.info("Error saving ingredient: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving ingredient");
+        }
     }
 
     @PostMapping("/delete/{id}")

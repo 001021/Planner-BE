@@ -1,13 +1,12 @@
 package com.ktds.finalproject.plannerbe.domain.cooking.ingredient.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -17,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class Ingredient {
 
     @Id
@@ -40,7 +40,7 @@ public class Ingredient {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expirationDate;
 
-    @Column(name = "storageLocation")
+    @Column(name = "storageLocation", nullable = false)
     private String storageLocation;
 
     @Column(name = "status")
@@ -49,7 +49,7 @@ public class Ingredient {
     @Column(name = "memo")
     private String memo;
 
-    @Column(name = "createdTime", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp createdTime;
+    @CreatedDate
+    private LocalDateTime createdTime;
 
 }
