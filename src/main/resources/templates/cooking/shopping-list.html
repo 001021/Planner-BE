@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:x-transition="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>장보기 목록</title>
+    <link rel="icon" href="/public/assets/img/favicon.png" type="image/x-icon" />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/assets/css/tailwind.output.css"/>
+    <script
+            src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+            defer
+    ></script>
+    <script src="/public/assets/js/init-alpine.js"></script>
+</head>
+<body>
+<div
+        class="flex h-screen bg-gray-50 dark:bg-gray-900"
+        :class="{ 'overflow-hidden': isSideMenuOpen}"
+>
+    <!-- Desktop sidebar -->
+    <aside
+            class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
+    >
+        <div class="py-4 text-gray-500 dark:text-gray-400">
+            <a
+                    class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+                    href="#"
+            >
+                <img src="/public/assets/img/logo.png" alt="logo" class="w-20 h-20 px-4"/>
+            </a>
+            <ul class="mt-6">
+                <li class="relative px-6 py-3">
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            th:href="@{/}"
+                    >
+                        <svg
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                        >
+                            <path
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                            ></path>
+                        </svg>
+                        <span class="ml-4">한 눈에 보기</span>
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li class="relative px-6 py-3">
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            th:href="@{/cleaning-todos}"
+                    >
+                        <svg
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                        >
+                            <path
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                            ></path>
+                        </svg>
+                        <span class="ml-4">청소 관리</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
+                    <span
+                            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"
+                    ></span>
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            th:href="@{/cooking/shopping-list}"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke-width="1.5"
+                             stroke="currentColor"
+                             class="w-5 h-5"
+                             aria-hidden="true"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>
+
+                        <span class="ml-4">장보기 목록</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            th:href="@{/cooking/ingredient}"
+                    >
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
+                        </svg>
+                        <span class="ml-4">식재료 관리</span>
+                    </a>
+                </li>
+            </ul>
+<!--            <div class="px-6 my-6">-->
+<!--                <a-->
+<!--                        class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"-->
+<!--                        th:href="@{/users/join}"-->
+<!--                >-->
+<!--                    회원가입-->
+<!--                    <span class="ml-2" aria-hidden="true">+</span>-->
+<!--                </a>-->
+<!--            </div>-->
+        </div>
+    </aside>
+    <!-- Mobile sidebar -->
+    <!-- Backdrop -->
+    <div
+            x-show="isSideMenuOpen"
+            x-transition:enter="transition ease-in-out duration-150"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in-out duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+    ></div>
+    <aside
+            class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
+            x-show="isSideMenuOpen"
+            x-transition:enter="transition ease-in-out duration-150"
+            x-transition:enter-start="opacity-0 transform -translate-x-20"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in-out duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0 transform -translate-x-20"
+            @click.away="closeSideMenu"
+            @keydown.escape="closeSideMenu"
+    >
+        <div class="py-4 text-gray-500 dark:text-gray-400">
+            <a
+                    class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+                    href="#"
+            >
+                <img src="/public/assets/img/logo.png" alt="logo" class="w-20 h-20 px-4"/>
+            </a>
+            <ul class="mt-6">
+                <li class="relative px-6 py-3">
+                    <!-- Active items have the snippet below -->
+                    <!-- <span
+                      class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                      aria-hidden="true"
+                    ></span> -->
+
+                    <!-- Add this classes to an active anchor (a tag) -->
+                    <!-- text-gray-800 dark:text-gray-100 -->
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="../../../templates/index.html"
+                    >
+                        <svg
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                        >
+                            <path
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                            ></path>
+                        </svg>
+                        <span class="ml-4">한 눈에 보기</span>
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li class="relative px-6 py-3">
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            th:href="@{/cleaning-todos}"
+                    >
+                        <svg
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                        >
+                            <path
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                            ></path>
+                        </svg>
+                        <span class="ml-4">청소 관리</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
+                    <span
+                            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"
+                    ></span>
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            th:href="@{/cooking/shopping-list}"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke-width="1.5"
+                             stroke="currentColor"
+                             class="w-5 h-5"
+                             aria-hidden="true"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>
+
+                        <span class="ml-4">장보기 목록</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            th:href="@{/cooking/ingredient}"
+                    >
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
+                        </svg>
+                        <span class="ml-4">식재료 관리</span>
+                    </a>
+                </li>
+            </ul>
+<!--            <div class="px-6 my-6">-->
+<!--                <a-->
+<!--                        class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"-->
+<!--                        th:href="@{/users/join}"-->
+<!--                >-->
+<!--                    회원가입-->
+<!--                    <span class="ml-2" aria-hidden="true">+</span>-->
+<!--                </a>-->
+<!--            </div>-->
+        </div>
+    </aside>
+    <div class="flex flex-col flex-1">
+        <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+            <div
+                    class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
+            >
+                <!-- Mobile hamburger -->
+                <button
+                        class="p-1 -ml-1 mr-5 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+                        @click="toggleSideMenu"
+                        aria-label="Menu"
+                >
+                    <svg
+                            class="w-6 h-6"
+                            aria-hidden="true"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                    >
+                        <path
+                                fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"
+                        ></path>
+                    </svg>
+                </button>
+                <!-- Search input -->
+                <div class="flex justify-center flex-1 lg:mr-32">
+                    <div
+                            class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
+                    >
+                        <div class="absolute inset-y-0 flex items-center pl-2">
+                            <svg
+                                    class="w-4 h-4"
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                            >
+                                <path
+                                        fill-rule="evenodd"
+                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                        clip-rule="evenodd"
+                                ></path>
+                            </svg>
+                        </div>
+                        <input
+                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                                type="text"
+                                placeholder="Search for projects"
+                                aria-label="Search"
+                        />
+                    </div>
+                </div>
+                <ul class="flex items-center flex-shrink-0 space-x-6">
+                    <!-- Theme toggler -->
+                    <li class="flex">
+                        <button
+                                class="rounded-md focus:outline-none focus:shadow-outline-purple"
+                                @click="toggleTheme"
+                                aria-label="Toggle color mode"
+                        >
+                            <template x-if="!dark">
+                                <svg
+                                        class="w-5 h-5"
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                >
+                                    <path
+                                            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                    ></path>
+                                </svg>
+                            </template>
+                            <template x-if="dark">
+                                <svg
+                                        class="w-5 h-5"
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                >
+                                    <path
+                                            fill-rule="evenodd"
+                                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                            clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </template>
+                        </button>
+                    </li>
+                    <li class="relative">
+                        <button id="toggleChatbot"
+                                class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
+                                @click="toggleProfileMenu"
+                                @keydown.escape="closeProfileMenu"
+                                aria-label="Profile"
+                                aria-haspopup="true"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                <path fill-rule="evenodd" d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </button>
+                        <div class="absolute right-0 bottom-0 mb-16 mr-4 p-4 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700" aria-label="chatbot" style="width: 28rem;">
+                            <div class="flex flex-col h-64 overflow-auto max-h-[300px] overflow-y-auto" >
+                                <div id="messageArea" class="flex-1 space-y-2 p-2" style="overflow-y: auto; max-height: 700px">
+                                    <div class="chat-message chatbot flex">
+                                        <div class="text-sm text-white bg-purple-600 rounded-lg p-2">
+                                            안녕하세요! 무엇을 도와드릴까요?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <input type="text" id="chatInput" class="flex-1 text-sm p-2 border border-gray-300 rounded-l-lg focus:outline-none" placeholder="메시지 입력...">
+                                <button id="sendButton" class="bg-purple-600 text-white p-2 rounded-r-lg focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                                        <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <main class="h-full pb-16 overflow-y-auto">
+            <!-- Remove everything INSIDE this div to a really blank page -->
+            <div class="container px-6 mx-auto grid">
+                <h2
+                        class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+                >
+                    장보기 목록
+                </h2>
+                <div
+                        class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+                >
+                    <form th:action="@{/cooking/shopping-list}" method="post">
+                        <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                  새로운 장보기 목록
+                </span>
+                            <div class="flex items-center space-x-2 relative text-gray-500 focus-within:text-purple-600">
+                                <input
+                                        class="block w-full pr-6 mt-1 mr-5 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                        placeholder="떡볶이 양념"
+                                        name="itemName"
+                                />
+                                <input
+                                        class="block pr-6 mt-1 mr-5 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                        placeholder="2"
+                                        name="quantity"
+                                />
+                                <select
+                                        class="block pr-6 mt-1 mr-5 ml-6 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select"
+                                        name="unit"
+                                >
+                                    <option value="">단위 선택</option>
+
+                                    <optgroup label="수량">
+                                        <option value="개">개</option>
+                                        <option value="box">박스(box)</option>
+                                        <option value="pack">팩(pack)</option>
+                                        <option value="bundle">묶음(bundle)</option>
+                                        <option value="piece">조각(piece)</option>
+                                    </optgroup>
+
+                                    <optgroup label="무게">
+                                        <option value="g">그램(g)</option>
+                                        <option value="kg">킬로그램(kg)</option>
+                                        <option value="mg">밀리그램(mg)</option>
+                                    </optgroup>
+
+                                    <optgroup label="부피">
+                                        <option value="L">리터(L)</option>
+                                        <option value="mL">밀리리터(mL)</option>
+                                    </optgroup>
+
+                                    <optgroup label="기타">
+                                        <option value="slice">슬라이스(slice)</option>
+                                        <option value="can">캔(can)</option>
+                                        <option value="bottle">병(bottle)</option>
+                                    </optgroup>
+                                </select>
+                                <button
+                                        class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                        type="submit"
+                                >
+                                    추가
+                                </button>
+                            </div>
+                        </label>
+                    </form>
+                    <ul th:if="${shoppinglist}" class="divide-y divide-gray-200 text-sm">
+                        <li th:each="shoppingItem : ${shoppinglist}" id="${'shopping-list-' + shopping-list.id}"
+                            class="flex justify-between items-center p-4 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox"
+                                       class="form-checkbox h-5 w-5 text-purple-600 transition duration-150 ease-in-out form-checkbox focus:border-focus focus:shadow-focus focus:outline-none focus-visible:border-focus focus-visible:shadow-focus"
+                                       th:checked="${shoppingItem.isPurchased}"
+                                       th:attr="data-shoppingItem-id=${shoppingItem.id}"
+                                       onchange="updateShoppingItemStatus(this, this.getAttribute('data-shoppingItem-id'))"/>
+                                <span th:text="${shoppingItem.itemName}" th:id="${'name-' + shoppingItem.id}"
+                                      th:classappend="${shoppingItem.isPurchased} ? 'text-gray-400' : 'text-gray-900'"
+                                      th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"></span>
+                                <input type="text"  th:id="${'edit-name-' + shoppingItem.id}" class="hidden focus:border-focus focus:shadow-focus focus:outline-none focus-visible:border-focus focus-visible:shadow-focus"
+                                       th:value="${shoppingItem.itemName}"/>
+                                <span th:text="${shoppingItem.quantity}" th:id="${'quantity-' + shoppingItem.id}"
+                                      th:classappend="${shoppingItem.isPurchased} ? 'text-gray-400' : 'text-gray-900'"
+                                      th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"></span>
+                                <input type="text"  th:id="${'edit-quantity-' + shoppingItem.id}" class="hidden focus:border-focus focus:shadow-focus focus:outline-none focus-visible:border-focus focus-visible:shadow-focus"
+                                       th:value="${shoppingItem.quantity}"/>
+                                <span th:text="${shoppingItem.unit}" th:id="${'unit-' + shoppingItem.id}"
+                                        th:classappend="${shoppingItem.isPurchased} ? 'text-gray-400' : 'text-gray-900'"
+                                        th:styleappend="${shoppingItem.isPurchased} ? 'text-decoration: line-through' : 'text-decoration: none'"></span>
+                                <select
+                                        th:id="${'edit-unit-' + shoppingItem.id}"
+                                        class="hidden block w-full pr-20 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select"
+                                        name="unit"
+                                >
+                                    <option th:value="${shoppingItem.unit}">단위 선택</option>
+
+                                    <optgroup label="무게">
+                                        <option value="g">그램(g)</option>
+                                        <option value="kg">킬로그램(kg)</option>
+                                        <option value="mg">밀리그램(mg)</option>
+                                        <option value="oz">온스(oz)</option>
+                                        <option value="lb">파운드(lb)</option>
+                                    </optgroup>
+
+                                    <optgroup label="부피">
+                                        <option value="L">리터(L)</option>
+                                        <option value="mL">밀리리터(mL)</option>
+                                        <option value="cup">컵(cup)</option>
+                                        <option value="tbsp">테이블스푼(tbsp)</option>
+                                        <option value="tsp">티스푼(tsp)</option>
+                                    </optgroup>
+
+                                    <optgroup label="수량">
+                                        <option value="개">개</option>
+                                        <option value="box">박스(box)</option>
+                                        <option value="pack">팩(pack)</option>
+                                        <option value="bundle">묶음(bundle)</option>
+                                        <option value="piece">조각(piece)</option>
+                                    </optgroup>
+
+                                    <optgroup label="기타">
+                                        <option value="slice">슬라이스(slice)</option>
+                                        <option value="pinch">꼬집(pinch)</option>
+                                        <option value="handful">한 줌(handful)</option>
+                                        <option value="can">캔(can)</option>
+                                        <option value="bottle">병(bottle)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <!--                                    <input type="hidden" name="_method" value="Save"/>-->
+                                <button
+                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                        aria-label="Edit"
+                                        th:attr="data-shoppingItem-id=${shoppingItem.id}" data-action="edit"
+                                        onclick="toggleEdit(this.getAttribute('data-shoppingItem-id'))"
+                                >
+                                    <svg
+                                            class="edit-icon w-5 h-5"
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                        ></path>
+                                    </svg>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 20 20"
+                                         fill="currentColor"
+                                         class="save-icon w-5 h-5 hidden"
+                                         aria-hidden="true"
+                                    >
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
+                                    </svg>
+
+
+                                </button>
+                                <form th:action="@{'/cooking/shopping-list/delete/' + ${shoppingItem.id}}" method="post"
+                                      class="inline">
+                                    <input type="hidden" name="_method" value="delete"/>
+                                    <button
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Delete"
+                                    >
+                                        <svg
+                                                class="w-5 h-5"
+                                                aria-hidden="true"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                    fill-rule="evenodd"
+                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                    clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- 식재료 추가 모달 -->
+
+                <div id="ingredientModal" class="hidden fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+                    <div
+                            class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl transform transition ease-out duration-150"
+                            role="dialog"
+                    >
+                        <header class="flex justify-end">
+
+                            <button
+                                    class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded hover:text-gray-700"
+                                    aria-label="close"
+                                    onclick="closeModal()"
+                            >
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
+                                    <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </header>
+                        <div class="mt-4 mb-6">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">방금 사신 식재료를 냉장고에 추가하시겠어요?</h3>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">식재료명</label>
+                                <input type="text" id="ingredientName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
+                            </div>
+                            <div class="flex mb-4 space-x-3">
+                                <div class="w-full">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">수량</label>
+                                    <input type="number" id="ingredientQuantity" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
+                                </div>
+                                <div class="w-full">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">단위</label>
+                                    <input type="text" id="ingredientUnit" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">보관장소</label>
+                                <select id="storageLocation" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                                    <option value="냉장고">냉장고</option>
+                                    <option value="냉동고">냉동고</option>
+                                    <option value="실온">실온</option>
+                                </select>
+                            </div>
+                        </div>
+                        <footer class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+                            <button
+                                    class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto hover:border-gray-500 focus:border-gray-500 focus:outline-none focus:shadow-outline-gray"
+                                    onclick="closeModal()"
+                            >
+                                취소
+                            </button>
+                            <button
+                                    class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                    onclick="addIngredient()"
+                            >
+                                확인
+                            </button>
+                        </footer>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+
+</html>
+
+<script th:inline="javascript">
+
+    // 챗봇 창 상태 변수
+    let isProfileMenuOpen = false;
+
+    // 토글 버튼 클릭 이벤트 리스너
+    document.getElementById('toggleChatbot').addEventListener('click', function() {
+        isProfileMenuOpen = !isProfileMenuOpen; // 상태 토글
+        updateChatbotVisibility(); // 챗봇 창 표시 업데이트
+    });
+
+    // 챗봇 창 표시 상태 업데이트 함수
+    function updateChatbotVisibility() {
+        const chatbotWindow = document.querySelector('[aria-label="chatbot"]');
+        if (isProfileMenuOpen) {
+            chatbotWindow.style.display = 'block'; // 챗봇 창 표시
+        } else {
+            chatbotWindow.style.display = 'none'; // 챗봇 창 숨김
+        }
+    }
+
+    // 초기 상태 설정
+    updateChatbotVisibility();
+
+    document.getElementById('chatInput').addEventListener('keydown', function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // 엔터 키 기본 이벤트 방지
+            document.getElementById('sendButton').click(); // 전송 버튼 클릭 이벤트 트리거
+        }
+    });
+
+    // 전송 버튼 클릭 이벤트 리스너
+    document.getElementById('sendButton').addEventListener('click', function() {
+        var userMessage = document.getElementById('chatInput').value;
+        if (userMessage.trim() !== '') {
+            // 사용자 메시지를 화면에 추가
+            var userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'flex justify-end mb-2'; // 오른쪽 정렬을 위한 flex 컨테이너
+            userMessageDiv.innerHTML = `<div class="text-sm bg-blue-100 rounded-lg p-2">${userMessage}</div>`; // 사용자 메시지 스타일
+            document.getElementById('messageArea').appendChild(userMessageDiv);
+
+            var loadingMessageDiv = document.createElement('div');
+            loadingMessageDiv.className = 'chat-message loading-message flex justify-start mb-2';
+            // 로딩 애니메이션
+            loadingMessageDiv.innerHTML = `
+            <div class="flex space-x-1 justify-center">
+                <div class="w-2 h-2 bg-gray-800 rounded-full animate-blink"></div>
+                <div class="w-2 h-2 bg-gray-800 rounded-full animate-blink" style="animation-delay: -0.5s;"></div>
+                <div class="w-2 h-2 bg-gray-800 rounded-full animate-blink" style="animation-delay: -1s;"></div>
+            </div>
+        `;
+            document.getElementById('messageArea').appendChild(loadingMessageDiv);
+
+            // Fetch 요청 및 챗봇 응답 처리
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ "message": userMessage })
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    document.querySelector('.loading-message').remove();
+                    // 챗봇 응답을 화면에 추가
+                    var chatbotMessageDiv = document.createElement('div');
+                    chatbotMessageDiv.className = 'flex justify-start mb-2'; // 왼쪽 정렬을 위한 flex 컨테이너
+                    chatbotMessageDiv.innerHTML = `<div class="text-sm bg-purple-600 text-white rounded-lg p-2">${data.response}</div>`; // 챗봇 메시지 스타일
+                    document.getElementById('messageArea').appendChild(chatbotMessageDiv);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // 에러 메시지 처리
+                    var errorMessageDiv = document.createElement('div');
+                    errorMessageDiv.className = 'error-message bg-red-600 text-white rounded-lg p-2 mb-2';
+                    errorMessageDiv.innerHTML = '챗봇 서비스에 문제가 발생했습니다.';
+                    document.getElementById('messageArea').appendChild(errorMessageDiv);
+                });
+
+            document.getElementById('chatInput').value = ''; // 입력 필드 초기화
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll(`input[type="checkbox"][data-shoppingItem-id]`).forEach(checkbox => {
+            const shoppingItemId = checkbox.getAttribute('data-shoppingItem-id');
+            const itemNameElement = document.getElementById('name-' + shoppingItemId);
+            const quantityElement = document.getElementById('quantity-' + shoppingItemId);
+            const unitElement = document.getElementById('unit-' + shoppingItemId);
+
+            if (checkbox.checked) {
+                itemNameElement.classList.add('line-through', 'text-gray-400');
+                itemNameElement.classList.remove('text-gray-900');
+                quantityElement.classList.add('line-through', 'text-gray-400');
+                quantityElement.classList.remove('text-gray-900');
+                unitElement.classList.add('line-through', 'text-gray-400');
+                unitElement.classList.remove('text-gray-900');
+            } else {
+                itemNameElement.classList.remove('line-through', 'text-gray-400');
+                itemNameElement.classList.add('text-gray-900');
+                quantityElement.classList.remove('line-through', 'text-gray-400');
+                quantityElement.classList.add('text-gray-900');
+                unitElement.classList.remove('line-through', 'text-gray-400');
+                unitElement.classList.add('text-gray-900');
+            }
+        });
+    });
+
+
+
+    function updateShoppingItemStatus(checkbox, shoppingItemId) {
+        console.log(shoppingItemId);
+        const isPurchased = checkbox.checked;
+        const itemNameElement = document.getElementById('name-' + shoppingItemId);
+        const quantityElement = document.getElementById('quantity-' + shoppingItemId);
+        const unitElement = document.getElementById('unit-' + shoppingItemId);
+
+        fetch('/cooking/shopping-list/update/status/' + shoppingItemId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                isPurchased: isPurchased
+            })
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        }).then(data => {
+            // Tailwind CSS 클래스 동적 조작
+            if (isPurchased) {
+                itemNameElement.style.textDecoration = 'line-through';
+                itemNameElement.classList.add('text-gray-400');
+                itemNameElement.classList.remove('text-gray-900');
+
+                quantityElement.style.textDecoration = 'line-through';
+                quantityElement.classList.add('text-gray-400');
+                quantityElement.classList.remove('text-gray-900');
+
+                unitElement.style.textDecoration = 'line-through';
+                unitElement.classList.add('text-gray-400');
+                unitElement.classList.remove('text-gray-900');
+
+                toggleModal(data.id, data.itemName, data.unit, data.quantity);
+
+            } else {
+                itemNameElement.style.textDecoration = 'none';
+                itemNameElement.classList.remove('text-gray-400');
+                itemNameElement.classList.add('text-gray-900');
+
+                quantityElement.style.textDecoration = 'none';
+                quantityElement.classList.remove('text-gray-400');
+                quantityElement.classList.add('text-gray-900');
+
+                unitElement.style.textDecoration = 'none';
+                unitElement.classList.remove('text-gray-400');
+                unitElement.classList.add('text-gray-900');
+            }
+        }).catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    }
+
+
+    function toggleEdit(shoppingItemId) {
+        const editNameInput = document.getElementById('edit-name-' + shoppingItemId);
+        const editQuantityInput = document.getElementById('edit-quantity-' + shoppingItemId);
+        const editUnitSelect = document.getElementById('edit-unit-' + shoppingItemId); // 단위 수정을 위한 select 요소
+        const itemNameSpan = document.getElementById('name-' + shoppingItemId);
+        const quantitySpan = document.getElementById('quantity-' + shoppingItemId);
+        const unitSpan = document.getElementById('unit-' + shoppingItemId); // 현재 단위를 보여주는 span 요소
+        const editBtn = document.querySelector(`button[data-shoppingItem-id='${shoppingItemId}']`);
+        const isEditing = editBtn.getAttribute('data-action') === 'edit';
+
+        if (isEditing) {
+            // Edit 모드로 전환
+            itemNameSpan.classList.add('hidden');
+            editNameInput.classList.remove('hidden');
+            editNameInput.value = itemNameSpan.textContent;
+
+            quantitySpan.classList.add('hidden');
+            editQuantityInput.classList.remove('hidden');
+            editQuantityInput.value = quantitySpan.textContent;
+
+            unitSpan.classList.add('hidden');
+            editUnitSelect.classList.remove('hidden');
+            editUnitSelect.value = unitSpan.textContent;
+
+            editBtn.querySelector('.edit-icon').classList.add('hidden');
+            editBtn.querySelector('.save-icon').classList.remove('hidden');
+            editBtn.setAttribute('data-action', 'save');
+        } else {
+            // Save 모드로 전환
+            const updatedItemName = editNameInput.value;
+            const updatedQuantity = editQuantityInput.value;
+            const updatedUnit = editUnitSelect.value; // 수정된 단위 값을 가져옵니다.
+
+            saveUpdates(shoppingItemId, updatedItemName, updatedQuantity, updatedUnit).then(() => {
+                itemNameSpan.textContent = updatedItemName;
+                itemNameSpan.classList.remove('hidden');
+                editNameInput.classList.add('hidden');
+
+                quantitySpan.textContent = updatedQuantity;
+                quantitySpan.classList.remove('hidden');
+                editQuantityInput.classList.add('hidden');
+
+                unitSpan.textContent = updatedUnit; // 단위 span 요소를 업데이트합니다.
+                unitSpan.classList.remove('hidden');
+                editUnitSelect.classList.add('hidden');
+
+                editBtn.querySelector('.edit-icon').classList.remove('hidden');
+                editBtn.querySelector('.save-icon').classList.add('hidden');
+                editBtn.setAttribute('data-action', 'edit');
+            }).catch(error => {
+                console.error('Error updating item:', error);
+                alert('Failed to update item. Please try again.');
+            });
+        }
+    }
+
+
+
+
+    function saveUpdates(shoppingItemId, itemName, quantityText, unit) {
+
+        const quantity = parseInt(quantityText.replace(/[^0-9]/g, ''), 10);
+
+        console.log(shoppingItemId, itemName, quantity, unit);
+        return fetch(`/cooking/shopping-list/update/${shoppingItemId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                itemName: itemName,
+                quantity: quantity,
+                unit: unit
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Shopping item updated:', data);
+                return data;
+            })
+            .catch(error => {
+                console.error('Error updating shopping item:', error);
+                alert('Failed to update shopping item status. Please try again.');
+            });
+    }
+
+    function toggleModal(shoppingItemId, itemName, unit, quantity) {
+        const modal = document.getElementById('ingredientModal');
+        const ingredientName = document.getElementById('ingredientName');
+        const ingredientQuantity = document.getElementById('ingredientQuantity');
+        const ingredientUnit = document.getElementById('ingredientUnit');
+
+        console.log(ingredientName)
+        console.log(ingredientQuantity)
+        console.log(ingredientUnit)
+
+        ingredientName.value = itemName; // 아이템 이름 설정
+        ingredientQuantity.value = quantity; // 아이템 수량 설정
+        ingredientUnit.value = unit; // 아이템 단위 설정
+
+        modal.classList.toggle('hidden'); // 모달 표시 상태 토글
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('ingredientModal');
+        modal.classList.add('hidden');
+    }
+
+    function addIngredient() {
+        const ingredientName = document.getElementById('ingredientName').value;
+        const ingredientQuantity = document.getElementById('ingredientQuantity').value;
+        const ingredientUnit = document.getElementById('ingredientUnit').value;
+        const storageLocation = document.getElementById('storageLocation').value;
+
+        fetch('/cooking/ingredient/save-in-modal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ingredientName: ingredientName,
+                quantity: ingredientQuantity,
+                unit: ingredientUnit,
+                storageLocation: storageLocation,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('식재료가 추가되었습니다.');
+                closeModal();
+            })
+            .catch((error) => {
+                alert('식재료 추가에 실패했습니다.');
+                console.error('Error:', error);
+            });
+    }
+
+
+
+
+
+</script>
