@@ -22,7 +22,10 @@ public class UserController {
     @PostMapping("/join")
     @ResponseBody
     public ResponseEntity<User> join(@RequestBody User user) {
-        return ResponseEntity.ok(userService.registerUser(user));
+        if (userService.registerUser(user) != null) {
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/login")
