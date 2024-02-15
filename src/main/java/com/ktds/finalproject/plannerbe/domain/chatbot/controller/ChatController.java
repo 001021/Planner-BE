@@ -30,7 +30,8 @@ public class ChatController {
         headers.setBearerAuth(openApiToken);
         headers.add("Content-Type", "application/json");
 
-        String requestBody = "{\"model\": \"" + model + "\", \"prompt\": \"" + message.getMessage() + "\", \"max_tokens\": 1000, \"temperature\": 0.1}";
+        String requestBody = "{\"model\": \"" + model + "\", \"prompt\": \"" + message.getMessage() + "를 간결하고 명확하게 알려줘" +
+                "\", \"max_tokens\": 1000, \"temperature\": 0.1}";
 
         HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
 
@@ -41,7 +42,6 @@ public class ChatController {
                 String.class);
 
         String responseJson = response.getBody();
-        System.out.println(response);
 
         ObjectMapper objectMapper = new ObjectMapper();
 
